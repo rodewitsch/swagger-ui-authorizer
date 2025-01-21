@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "Swagger UI Authorizer",
+  "description": "Swagger UI Authorizer",
+  "version": "0.0.1",
+  "icons": {
+    "16": "/assets/images/icons/icon16.png",
+    "48": "/assets/images/icons/icon48.png",
+    "128": "/assets/images/icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "world": "MAIN",
+      "js": [
+        "node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
+        "core.js",
+        "content/store.js",
+        "content/content.js",
+        "content/components/authModal/authModal.js",
+        "content/components/authModal/authBlock/authBlock.js",
+        "content/components/authModal/authBlock/authBlockProfile/authBlockProfile.js",
+        "content/components/authModal/authBlock/authBlockProfile/authBlockProfileBody.js"
+      ],
+      "matches": [ 
+        "<all_urls>"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "content/isolatedContent.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/content/**/*.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage"
+  ]
+}
