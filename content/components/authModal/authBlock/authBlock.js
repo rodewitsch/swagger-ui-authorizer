@@ -14,6 +14,9 @@ class AuthBlock extends HTMLElement {
             display: flex;
             justify-content: space-between;
           }
+          auth-block-profile {
+            border-bottom: 1px solid rgba(59, 65, 81, .3);
+          }
         </style>
 
         <div class="auth-block">

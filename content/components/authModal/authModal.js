@@ -19,15 +19,14 @@ class AuthModal extends HTMLElement {
             max-width: 55vw !important;
             min-width: 55vw !important;
           }
-          .modal-ux .modal-ux-content {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-          }
           .modal-ux .auth-container {
             padding: 0 !important;
           }
           .modal-ux .opblock-tag {
             padding: 10px 20px 10px 20px !important;
+          }
+          .modal-ux .auth-container auth-block-profile {
+            display: block;
           }
         </style>
 

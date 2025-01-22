@@ -2,8 +2,6 @@ class AuthBlockProfileBody extends HTMLElement {
   constructor() {
     super();
 
-
-
     const scheme = this.getAttribute('scheme');
     const securitySchemes = SwaggerUIAuthorizerModule.getSecuritySchemes(scheme);
     const authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations(scheme);
@@ -33,6 +31,7 @@ class AuthBlockProfileBody extends HTMLElement {
         <div>
           <textarea>${JSON.stringify(schemeProfile, null, 2)}</textarea>
           <button class="save">Save</button>
+          <button class="remove">Remove</button>
           <button class="cancel">Cancel</button>
         </div>
       `;
@@ -46,6 +45,15 @@ class AuthBlockProfileBody extends HTMLElement {
         const newProfile = JSON.parse(this.querySelector('textarea').value);
         SwaggerUIAuthorizerModule.saveAuthorization(newProfile);
         ExtStore.authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
+      });
+
+      this.querySelector('button.remove').addEventListener('click', () => {
+        SwaggerUIAuthorizerModule.removeAuthorization(schemeProfile.id);
+        ExtStore.authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
+      });
+
+      this.querySelector('button.cancel').addEventListener('click', () => {
+        this.parentElement.parentElement.classList.toggle('open');
       });
 
       return true;

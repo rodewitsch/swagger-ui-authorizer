@@ -12,21 +12,39 @@ class AuthBlockProfile extends HTMLElement {
       TEMPLATE_CONTENT = `
         <style>
           .header {
+            height: 35px;
             cursor: pointer;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+          }
+          auth-block-profile:not(.open)[profile-id] .header::after {
+            content: "˅";
+          }
+          auth-block-profile.open[profile-id] .header::after {
+            content: "˄";
+          }
+          auth-block-profile:not(.open) .header::after {
+            content: "+";
+          }
+          auth-block-profile.open .header::after {
+            content: "x";
           }
           auth-block-profile-body {
             height: 0;
             display: block;
             overflow: hidden;
           }
-          auth-block-profile-body.open {
+          auth-block-profile.open auth-block-profile-body {
             height: auto;
           }
         </style>
 
         <div>
           <div class="header">
-            <h5>${schemeProfile && schemeProfile.label || 'Add profile'}</h5>
+            <h5>${schemeProfile && schemeProfile.label || 'add new profile'}</h5>
+            <span>${schemeProfile && schemeProfile.id ? '' : ''}</span>
           </div>
           <auth-block-profile-body scheme="${scheme}" profile-id="${schemeProfile && schemeProfile.id}"></auth-block-profile-body>
         </div>
@@ -38,7 +56,7 @@ class AuthBlockProfile extends HTMLElement {
       this.appendChild(TEMPLATE.content.cloneNode(true));
 
       this.querySelector('.header').addEventListener('click', () => {
-        this.querySelector('auth-block-profile-body').classList.toggle('open');
+        this.classList.toggle('open');
       });
 
       return true;
