@@ -120,22 +120,20 @@ const SwaggerUIAuthorizerModule = (() => {
               // Get the parameters
               const authRequestParams = authorization.parameters;
 
-              const queryParams = new URLSearchParams(authRequestParams.query || {}).toString();
               const bodyParams = JSON.stringify(authRequestParams.body || {});
 
               // Execute the request
               const response = await window.ui.getSystem().fn.fetch({
-                url: window.ui.getSystem().fn.buildRequest({
+                ...window.ui.getSystem().fn.buildRequest({
                   spec: API,
                   operationId: authRequestInfo.operation.operationId,
-                  parameters: authRequestParams.parameters
-                }).url + (queryParams ? `?${queryParams}` : ''),
-                method: authRequestInfo.method,
-                headers: {
-                  'Content-Type': 'application/json'
-                },
+                  parameters: { ...authRequestParams.parameters, ...authRequestParams.query },
+                  securities: { authorized: this.mapToObject(window.ui.getSystem().authSelectors.authorized()) },
+                }),
+                ...{ headers: { 'Content-Type': 'application/json' } },
+                ...authRequestParams.headers,
                 parameters: authRequestParams.parameters,
-                body: bodyParams
+                ...(authRequestInfo.method === 'get' ? {} : { body: bodyParams }),
               });
 
               const token = this.getValueByPath(response, authorization.auth_value_source.replace(/^response\./, ''));
@@ -175,6 +173,10 @@ const SwaggerUIAuthorizerModule = (() => {
       } else {
         this.authorizations.push({ id: new Date().getTime().toString(), ...authorization });
       }
+      window.localStorage.setItem('swagger-ui-authorizations', JSON.stringify(this.authorizations));
+    },
+    removeAuthorization: function (id) {
+      this.authorizations = this.authorizations.filter((auth) => auth.id !== id);
       window.localStorage.setItem('swagger-ui-authorizations', JSON.stringify(this.authorizations));
     },
     getTextAsset: async function (path) {
