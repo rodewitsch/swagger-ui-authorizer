@@ -120,20 +120,24 @@ const SwaggerUIAuthorizerModule = (() => {
               // Get the parameters
               const authRequestParams = authorization.parameters;
 
-              const bodyParams = JSON.stringify(authRequestParams.body || {});
+              const prebuildRequest = window.ui.getSystem().fn.buildRequest({
+                spec: API,
+                operationId: authRequestInfo.operation.operationId,
+                parameters: { ...authRequestParams.parameters, ...authRequestParams.query },
+                securities: { authorized: this.mapToObject(window.ui.getSystem().authSelectors.authorized()) },
+                bodyParams: authRequestParams.body,
+              });
 
               // Execute the request
               const response = await window.ui.getSystem().fn.fetch({
-                ...window.ui.getSystem().fn.buildRequest({
-                  spec: API,
-                  operationId: authRequestInfo.operation.operationId,
-                  parameters: { ...authRequestParams.parameters, ...authRequestParams.query },
-                  securities: { authorized: this.mapToObject(window.ui.getSystem().authSelectors.authorized()) },
-                }),
-                ...{ headers: { 'Content-Type': 'application/json' } },
-                ...authRequestParams.headers,
+                ...prebuildRequest,
+                headers: {
+                  'Content-Type': 'application/json',
+                  ...prebuildRequest.headers,
+                  ...authRequestParams.headers
+                },
                 parameters: authRequestParams.parameters,
-                ...(authRequestInfo.method === 'get' ? {} : { body: bodyParams }),
+                ...(authRequestInfo.method === 'get' ? {} : { body: JSON.stringify(authRequestParams.body || {}) }),
               });
 
               const token = this.getValueByPath(response, authorization.auth_value_source.replace(/^response\./, ''));
