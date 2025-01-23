@@ -49,6 +49,12 @@ const SwaggerUIAuthorizerModule = (() => {
       const securitySchemes = Object.keys(securitySchemesObj).map(scheme => ({ ...securitySchemesObj[scheme], securitySchemeName: scheme }));
       return name ? securitySchemes.find((scheme) => scheme.securitySchemeName === name) : securitySchemes;
     },
+    getSavedSecurity: function (name) {
+      const system = window.ui.getSystem();
+      const authorized = system.authSelectors.authorized();
+      const authorizedObject = this.mapToObject(authorized);
+      return name ? authorizedObject[name] : authorizedObject;
+    },
     getSecurityRequirementsByOperationId: function (operationId) {
       const requestInfo = this.getRequestInfoByOperationId(operationId);
       if (requestInfo && requestInfo.operation.security) {
