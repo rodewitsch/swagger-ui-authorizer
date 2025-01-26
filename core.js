@@ -177,10 +177,11 @@ const SwaggerUIAuthorizerModule = (() => {
 
     },
     unauthorize: function (scheme) {
+      const system = window.ui.getSystem();
       const authorized = this.getSavedSecurity();
       delete authorized[scheme];
-      window.ui.preauthorizeApiKey(scheme, '');
-      const authorizedMap = window.ui.getSystem().authSelectors.authorized();
+      system.authActions.logout([scheme]);
+      const authorizedMap = system.authSelectors.authorized();
       const authorizedObject = this.mapToObject(authorizedMap);
       localStorage.setItem('authorized', JSON.stringify(authorizedObject));
     },
