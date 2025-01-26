@@ -32,6 +32,7 @@
 
   // Add the authorizer button
   const openAuthModalBtn = document.createElement('button');
+  openAuthModalBtn.style.marginRight = '10px';
   openAuthModalBtn.classList.add('btn', 'authorize');
   openAuthModalBtn.innerHTML = '<span>Swagger UI Authorizer</span>';
   openAuthModalBtn.addEventListener('click', () => {
