@@ -7,8 +7,6 @@ class AuthModal extends HTMLElement {
     this.subscriptions = [ExtStore.subscribe('authorizations', () => this.render())];
 
     this.render = async () => {
-      console.log('Rendering AuthModal');
-
       while (this.lastChild) this.removeChild(this.lastChild);
 
       let TEMPLATE_CONTENT;
@@ -41,7 +39,7 @@ class AuthModal extends HTMLElement {
                 </div>
                 <div class="modal-ux-content">
                   <div class="auth-container">
-                      ${securitySchemes.map((scheme) => `<auth-block scheme="${scheme.securitySchemeName}"></auth-block>`).join('')}
+                      ${securitySchemes.map((scheme) => `<auth-block scheme="${scheme.security_scheme_name}"></auth-block>`).join('')}
                   </div>
                 </div>
               </div>

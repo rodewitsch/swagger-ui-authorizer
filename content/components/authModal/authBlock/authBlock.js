@@ -4,7 +4,7 @@ class AuthBlock extends HTMLElement {
 
     const scheme = SwaggerUIAuthorizerModule.getSecuritySchemes(this.getAttribute('scheme'));
     const authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
-    const schemeProfiles = authorizations.filter((auth) => auth.scheme === scheme.securitySchemeName);
+    const schemeProfiles = authorizations.filter((auth) => auth.scheme === scheme.security_scheme_name);
 
     this.render = async () => {
       let TEMPLATE_CONTENT;
@@ -14,13 +14,10 @@ class AuthBlock extends HTMLElement {
             display: flex;
             justify-content: space-between;
           }
-          auth-block-profile {
-            border-bottom: 1px solid rgba(59, 65, 81, .3);
-          }
         </style>
 
         <div class="auth-block">
-          <h4><span><code>${scheme.securitySchemeName}</code>
+          <h4><span><code>${scheme.security_scheme_name}</code>
             &nbsp; (${scheme.scheme}, ${scheme.type})</span>
 
             <div>
@@ -44,6 +41,7 @@ class AuthBlock extends HTMLElement {
       this.appendChild(TEMPLATE.content.cloneNode(true));
 
       this.querySelector('.current-profile-selector').addEventListener('change', (event) => {
+        SwaggerUIAuthorizerModule.unauthorize(scheme.security_scheme_name);
         schemeProfiles.forEach((auth) => {
           auth.current = false;
           if (auth.label === event.target.value) auth.current = true;

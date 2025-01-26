@@ -23,7 +23,7 @@ const SwaggerUIAuthorizerModule = (() => {
     },
     getAPI: function () {
       if (this.apiCache) return this.apiCache;
-      this.apiCache = JSON.parse(window.ui.spec()._root.entries[0][1]);
+      this.apiCache = this.mapToObject(window.ui.spec()).json;
       return api;
     },
     getRequestInfoByOperationId: function (operationId) {
@@ -43,11 +43,16 @@ const SwaggerUIAuthorizerModule = (() => {
       }
       return null;
     },
+    getSchemaObject: function (schema) {
+      const API = this.getAPI();
+      const schemaObj = API.components.schemas[schema];
+      return schemaObj;
+    },
     getSecuritySchemes: function (name) {
       const API = this.getAPI();
       const securitySchemesObj = API.components.securitySchemes;
-      const securitySchemes = Object.keys(securitySchemesObj).map(scheme => ({ ...securitySchemesObj[scheme], securitySchemeName: scheme }));
-      return name ? securitySchemes.find((scheme) => scheme.securitySchemeName === name) : securitySchemes;
+      const securitySchemes = Object.keys(securitySchemesObj).map(scheme => ({ ...securitySchemesObj[scheme], security_scheme_name: scheme }));
+      return name ? securitySchemes.find((scheme) => scheme.security_scheme_name === name) : securitySchemes;
     },
     getSavedSecurity: function (name) {
       const system = window.ui.getSystem();
@@ -118,7 +123,7 @@ const SwaggerUIAuthorizerModule = (() => {
             if (!authorizations.length) return params;
 
             // Get the profile
-            const authorization = authorizations.find(profile => profile.securitySchemeName === securityRequirement && profile.current);
+            const authorization = authorizations.find(profile => profile.security_scheme_name === securityRequirement && profile.current);
             if (authorization) {
 
               const authRequestInfo = this.getRequestInfoByOperationId(authorization.parameters.operation_id);
@@ -146,7 +151,7 @@ const SwaggerUIAuthorizerModule = (() => {
                 ...(authRequestInfo.method === 'get' ? {} : { body: JSON.stringify(authRequestParams.body || {}) }),
               });
 
-              const token = this.getValueByPath(response, authorization.auth_value_source.replace(/^response\./, ''));
+              const token = this.getValueByPath(response, authorization.parameters.auth_value_source.replace(/^response\./, ''));
               ui.preauthorizeApiKey(securityRequirement, token);
               const authorizedMap = window.ui.getSystem().authSelectors.authorized();
 
@@ -165,11 +170,19 @@ const SwaggerUIAuthorizerModule = (() => {
           }
         }
       } catch (error) {
-        console.error('Error:', error);
+        alert(`SwaggerUIAuthorizer preauth error \n\n${error.message}`);
       }
 
       return params;
 
+    },
+    unauthorize: function (scheme) {
+      const authorized = this.getSavedSecurity();
+      delete authorized[scheme];
+      window.ui.preauthorizeApiKey(scheme, '');
+      const authorizedMap = window.ui.getSystem().authSelectors.authorized();
+      const authorizedObject = this.mapToObject(authorizedMap);
+      localStorage.setItem('authorized', JSON.stringify(authorizedObject));
     },
     getSavedAuthorizations: function () {
       const authorizations = JSON.parse(window.localStorage.getItem('swagger-ui-authorizations')) || [];

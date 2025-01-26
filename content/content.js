@@ -4,6 +4,23 @@
 
   await SwaggerUIAuthorizerModule.waitForSwaggerFunctions();
 
+  // Migrations
+  const authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
+  authorizations.forEach((auth) => {
+    if (auth.parameters && auth.securitySchemeName) {
+      auth.security_scheme_name = auth.securitySchemeName;
+      delete auth.securitySchemeName;
+    }
+    if (auth.parameters && auth.parameters.operation_id && !auth.profile_type) auth.profile_type = 'request';
+    if (auth.parameters && auth.type) delete auth.type;
+    if (auth.auth_value_source) {
+      auth.parameters.auth_value_source = auth.auth_value_source;
+      delete auth.auth_value_source;
+    }
+
+    SwaggerUIAuthorizerModule.saveAuthorization(auth);
+  });
+
   // Save the original execute function
   const originalExecute = window.ui.getSystem().fn.execute;
 
@@ -12,8 +29,6 @@
     const preauthorizedParams = await SwaggerUIAuthorizerModule.preAuthorize(params);
     return originalExecute(...preauthorizedParams);
   };
-
-  ExtStore.authorizations = SwaggerUIAuthorizerModule.authorizations;
 
   // Add the authorizer button
   const openAuthModalBtn = document.createElement('button');

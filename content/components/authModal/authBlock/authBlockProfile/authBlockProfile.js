@@ -1,11 +1,20 @@
+const arrowDown = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="arrow" width="20" height="20" aria-hidden="true" focusable="false"><path d="M 17.418 14.908 C 17.69 15.176 18.127 15.176 18.397 14.908 C 18.667 14.64 18.668 14.207 18.397 13.939 L 10.489 6.109 C 10.219 5.841 9.782 5.841 9.51 6.109 L 1.602 13.939 C 1.332 14.207 1.332 14.64 1.602 14.908 C 1.873 15.176 2.311 15.176 2.581 14.908 L 10 7.767 L 17.418 14.908 Z"></path></svg>';
+
+
 class AuthBlockProfile extends HTMLElement {
   constructor() {
     super();
 
-    const profileId = this.getAttribute('profile-id');
     const scheme = this.getAttribute('scheme');
+    const profileId = this.getAttribute('profile-id');
+    const securitySchemes = SwaggerUIAuthorizerModule.getSecuritySchemes(scheme);
     const authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations(scheme);
-    const schemeProfile = authorizations.find((auth) => auth.id === profileId);
+
+    const profileIdentifier = `${securitySchemes.security_scheme_name}-${profileId}`;
+
+    let schemeProfile = authorizations.find((auth) => auth.id === profileId);
+
+    const profileType = (schemeProfile && schemeProfile.profile_type) || 'request';
 
     this.render = async () => {
       let TEMPLATE_CONTENT;
@@ -18,6 +27,9 @@ class AuthBlockProfile extends HTMLElement {
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
+            border-radius: 5px 5px 0 0;
+            padding-left: 15px !important;
+            padding-right: 15px !important;
           }
           auth-block-profile:not(.open)[profile-id] .header::after {
             content: "˅";
@@ -31,22 +43,82 @@ class AuthBlockProfile extends HTMLElement {
           auth-block-profile.open .header::after {
             content: "x";
           }
-          auth-block-profile-body {
-            height: 0;
-            display: block;
-            overflow: hidden;
+          .body {
+            display: none;
           }
-          auth-block-profile.open auth-block-profile-body {
-            height: auto;
+          auth-block-profile.open .opblock-summary {
+            border-bottom: 1px solid #000;
+          }
+          auth-block-profile.open .body {
+            display: block;
+          }
+          .radio-wrapper {
+            display: flex;
+            cursor: not-allowed;
+            align-items: center;
+            justify-content: center;
+          }
+          .profile-type-wrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            cursor: pointer;
+          }
+          .profile-type-wrapper label {
+            cursor: pointer;
+            width: 100px;
+          }
+          .profile-type-wrapper .profile-type-selector {
+            display: flex;
+            margin-left: 8px;
+          }
+          .profile-type-selector label {
+            padding: 0 0 0 0;
+            margin: 0 0 0 10px;
+          }
+          .profile-type-selector input {
+            cursor: pointer;
           }
         </style>
+        <div class="opblock ${schemeProfile && schemeProfile.id ? 'opblock-get' : 'opblock-post'}">
 
-        <div>
-          <div class="header">
+          <div class="header opblock-summary opblock-summary-get">
             <h5>${schemeProfile && schemeProfile.label || 'add new profile'}</h5>
             <span>${schemeProfile && schemeProfile.id ? '' : ''}</span>
           </div>
-          <auth-block-profile-body scheme="${scheme}" profile-id="${schemeProfile && schemeProfile.id}"></auth-block-profile-body>
+
+
+          <div class="body opblock-body">
+
+            <div class="profile-type-wrapper opblock-section-header">
+
+              <label>Profile type</label>
+
+              <div class="profile-type-selector">
+
+                <div class="radio-wrapper" style="cursor: not-allowed;">
+                  <input style="pointer-events: none;" type="radio" id="${profileIdentifier}-key" name="${profileIdentifier}-profile-type" value="value" ${profileType === 'value' ? 'checked' : ''} />
+                  <label style="pointer-events: none;" for="${profileIdentifier}-key">value</label>
+                </div>
+
+                <div class="radio-wrapper" style="cursor: pointer;">
+                  <input type="radio" id="${profileIdentifier}-request" name="${profileIdentifier}-profile-type" value="request" ${profileType === 'request' ? 'checked' : ''}  />
+                  <label for="${profileIdentifier}-request">request</label>
+                </div>
+
+              </div>
+            
+            </div>
+
+
+            ${profileType === 'request' ? `<auth-block-profile-request-type scheme="${scheme}" profile-id="${profileId}"></auth-block-profile-request-type>` : ''}
+            
+            ${profileType === 'value' ? '<auth-block-profile-value-type></auth-block-profile-value-type>' : ''}
+
+            <button class="save">Save</button>
+            <button class="remove">Remove</button>
+            <button class="cancel">Cancel</button>
+          </div>
         </div>
       `;
 
@@ -57,6 +129,33 @@ class AuthBlockProfile extends HTMLElement {
 
       this.querySelector('.header').addEventListener('click', () => {
         this.classList.toggle('open');
+      });
+
+      this.querySelector('button.save').addEventListener('click', () => {
+        SwaggerUIAuthorizerModule.saveAuthorization(schemeProfile);
+        ExtStore.authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
+      });
+
+      this.querySelector('button.remove').addEventListener('click', () => {
+        SwaggerUIAuthorizerModule.removeAuthorization(schemeProfile.id);
+        ExtStore.authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
+      });
+
+      this.querySelector('button.cancel').addEventListener('click', (event) => {
+        event.currentTarget.closest('auth-block-profile').classList.toggle('open');
+      });
+
+      (this.querySelectorAll(`input[name="${profileIdentifier}-profile-type"]`) || []).forEach((radio) => {
+        radio.addEventListener('change', (event) => {
+          schemeProfile.profile_type = document.querySelector(`input[name="${profileIdentifier}-profile-type"]:checked`).value;
+          this.querySelector('textarea').value = JSON.stringify(schemeProfile, null, 2);
+        });
+      });
+
+      this.addEventListener('profile-changed', (event) => {
+        schemeProfile = event.detail;
+        event.stopPropagation();
+        event.preventDefault();
       });
 
       return true;
