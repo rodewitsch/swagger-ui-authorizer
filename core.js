@@ -108,6 +108,8 @@ const SwaggerUIAuthorizerModule = (() => {
         const operationId = params[0].operationId;
         const securityRequirements = this.getSecurityRequirementsByOperationId(operationId);
 
+        if (!securityRequirements) return params;
+
         for (const securityRequirement of securityRequirements) {
           const securityScheme = this.getSecuritySchemes(securityRequirement);
 
