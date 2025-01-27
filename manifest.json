@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Swagger UI Authorizer",
   "description": "Swagger UI Authorizer",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "icons": {
     "16": "/assets/images/icons/icon16.png",
     "48": "/assets/images/icons/icon48.png",
