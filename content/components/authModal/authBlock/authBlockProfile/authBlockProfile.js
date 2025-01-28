@@ -51,6 +51,7 @@ class AuthBlockProfile extends HTMLElement {
           }
           auth-block-profile.open .body {
             display: block;
+            padding: 15px;
           }
           .radio-wrapper {
             display: flex;
@@ -78,6 +79,14 @@ class AuthBlockProfile extends HTMLElement {
           }
           .profile-type-selector input {
             cursor: pointer;
+          }
+          .buttons-wrapper {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+          }
+          .buttons-wrapper button {
+            margin-right: 10px;
           }
         </style>
         <div class="opblock ${schemeProfile && schemeProfile.id ? 'opblock-get' : 'opblock-post'}">
@@ -115,9 +124,11 @@ class AuthBlockProfile extends HTMLElement {
             
             ${profileType === 'value' ? '<auth-block-profile-value-type></auth-block-profile-value-type>' : ''}
 
-            <button class="save">Save</button>
-            <button class="remove">Remove</button>
-            <button class="cancel">Cancel</button>
+            <div class="buttons-wrapper">
+              <button class="btn save">Save</button>
+              ${schemeProfile && schemeProfile.id ? `<button class="btn remove">Remove</button>` : ''}
+              <button class="btn close">Cancel</button>
+            </div>
           </div>
         </div>
       `;
@@ -131,17 +142,18 @@ class AuthBlockProfile extends HTMLElement {
         this.classList.toggle('open');
       });
 
-      this.querySelector('button.save').addEventListener('click', () => {
+      this.querySelector('button.save') && this.querySelector('button.save').addEventListener('click', () => {
         SwaggerUIAuthorizerModule.saveAuthorization(schemeProfile);
         ExtStore.authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
       });
 
-      this.querySelector('button.remove').addEventListener('click', () => {
+      this.querySelector('button.remove') && this.querySelector('button.remove').addEventListener('click', () => {
+        if (!confirm('Are you sure you want to remove this profile?')) return;
         SwaggerUIAuthorizerModule.removeAuthorization(schemeProfile.id);
         ExtStore.authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
       });
 
-      this.querySelector('button.cancel').addEventListener('click', (event) => {
+      this.querySelector('button.close') && this.querySelector('button.close').addEventListener('click', (event) => {
         event.currentTarget.closest('auth-block-profile').classList.toggle('open');
       });
 

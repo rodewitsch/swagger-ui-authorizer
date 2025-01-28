@@ -24,20 +24,20 @@ class AuthBlockProfileRequestType extends HTMLElement {
     const defaultProfile = {
       "security_scheme_name": securitySchemes.security_scheme_name,
       "scheme": securitySchemes.scheme,
-      "label": "Profile name",
+      "label": "",
       "parameters": {
         "operation_id": API[0].operation_id,
         "headers": {},
         "query": {},
         "parameters": {},
         "body": {},
-        "auth_value_source": null,
+        "auth_value_source": '',
+        "auth_value_ttl": '',
       },
       "profile_type": "request",
     };
 
     let schemeProfile = authorizations.find((auth) => auth.id === profileId) || defaultProfile;
-
 
 
     this.render = async () => {
@@ -86,10 +86,21 @@ class AuthBlockProfileRequestType extends HTMLElement {
             resize: vertical;
           }          
           auth-block-profile-request-type .params-wrapper input[type="text"]:focus, 
-          auth-block-profile-request-type .params-wrapper input[type="text"]:focus-visible {
+          auth-block-profile-request-type .params-wrapper input[type="number"]:focus, 
+          auth-block-profile-request-type .params-wrapper input[type="text"]:focus-visible, 
+          auth-block-profile-request-type .params-wrapper input[type="number"]:focus-visible {
             border: 2px solid #61affe;
           }
-          auth-block-profile-request-type .params-wrapper input[type="text"] {
+          auth-block-profile-request-type .params-wrapper input[type="number"] {
+            background: #fff;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            margin: 5px 0;
+            min-width: 100px;
+            padding: 8px 10px;
+          }
+          auth-block-profile-request-type .params-wrapper input[type="text"], 
+          auth-block-profile-request-type .params-wrapper input[type="number"] {
             font-family: monospace;
             font-size: 12px;
             font-weight: 600;
@@ -103,26 +114,26 @@ class AuthBlockProfileRequestType extends HTMLElement {
             padding: 5px;
           }    
           auth-block-profile .profile-type-wrapper.opblock-section-header {
-            padding: 8px 10px !important;
+            padding-left: 15px !important;
+            margin-left: -15px;
+            margin-right: -15px;
           }      
           auth-block-profile .profile-type-wrapper.opblock-section-header>label {
             margin: 0 !important;
           }
           auth-block-profile-request-type form {
-            padding: 10px;
           }
         </style>
         <form>
 
             <div class="params-wrapper">
               <label>Profile name</label>
-              <input spellcheck="false" class="profile-name-value" type="text" value="${schemeProfile.label}" />
+              <input spellcheck="false" placeholder="profile name" class="profile-name-value" type="text" value="${schemeProfile.label}" />
             </div>
 
             <div class="params-wrapper">
               <label>Request</label>
               <select>
-                <option value="choose request">Choose request</option>
                 ${API.map((request) => `<option ${schemeProfile.parameters.operation_id === request.operation_id ? 'selected' : ''} value="${request.operation_id}">${request.method.toUpperCase()} - ${request.path}</span></option>`).join('')}
               </select>
             </div>
@@ -160,6 +171,11 @@ class AuthBlockProfileRequestType extends HTMLElement {
             <div class="params-wrapper">
               <label>Value source</label>
               <input spellcheck="false" class="source-value" type="text" placeholder="response.body.access_token" value="${schemeProfile.parameters.auth_value_source}" />
+            </div>
+
+            <div class="params-wrapper">
+              <label>Value TTL</label>
+              <input spellcheck="false" class="source-ttl" type="number" placeholder="auth token life time in minutes (not needed for JWT)" value="${schemeProfile.parameters.auth_value_ttl || ''}" />
             </div>
 
         </form>
@@ -209,6 +225,10 @@ class AuthBlockProfileRequestType extends HTMLElement {
           schemeProfile.parameters.headersParams = {};
         }
 
+        if (request.operation.requestBody) {
+          schemeProfile.parameters.body = {};
+        }
+
         this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
 
         this.render();
@@ -218,10 +238,16 @@ class AuthBlockProfileRequestType extends HTMLElement {
         schemeProfile.label = event.target.value;
         this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
         this.render();
-      });      
-      
+      });
+
       this.querySelector('input.source-value') && this.querySelector('input.source-value').addEventListener('change', (event) => {
         schemeProfile.parameters.auth_value_source = event.target.value;
+        this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
+        this.render();
+      });
+
+      this.querySelector('input.source-ttl') && this.querySelector('input.source-ttl').addEventListener('change', (event) => {
+        schemeProfile.parameters.auth_value_ttl = event.target.value;
         this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
         this.render();
       });

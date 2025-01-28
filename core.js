@@ -21,10 +21,18 @@ const SwaggerUIAuthorizerModule = (() => {
 
       throw new Error('Swagger UI is not ready');
     },
+    getDateDifferenceInMinutes: function (date1, date2) {
+      const diff = Math.abs(date1 - date2);
+      return Math.floor((diff / 1000) / 60);
+    },
     getAPI: function () {
       if (this.apiCache) return this.apiCache;
       this.apiCache = this.mapToObject(window.ui.spec()).json;
       return api;
+    },
+    getRequestSchemas: function (schema) {
+      const API = this.getAPI();
+      return schema ? API.components.schemas[schema] : API.components.schemas;
     },
     getRequestInfoByOperationId: function (operationId) {
       const API = this.getAPI();
@@ -126,7 +134,16 @@ const SwaggerUIAuthorizerModule = (() => {
 
             // Get the profile
             const authorization = authorizations.find(profile => profile.security_scheme_name === securityRequirement && profile.current);
+
+
             if (authorization) {
+
+              if (authorization.parameters.auth_value_ttl && authorization.parameters.auth_value_date) {
+                const ttl = authorization.parameters.auth_value_ttl;
+                const authValueDate = new Date(authorization.parameters.auth_value_date);
+                const isTokenExpired = this.getDateDifferenceInMinutes(new Date(), authValueDate) > ttl;
+                if (!isTokenExpired) return params;
+              }
 
               const authRequestInfo = this.getRequestInfoByOperationId(authorization.parameters.operation_id);
 
@@ -166,6 +183,9 @@ const SwaggerUIAuthorizerModule = (() => {
                 const localStorageAuthorizedMap = JSON.parse(localStorageAuthorized);
                 localStorage.setItem('authorized', JSON.stringify({ ...localStorageAuthorizedMap, ...authorized }));
               }
+
+              authorization.parameters.auth_value_date = new Date().toISOString();
+              this.saveAuthorization(authorization);
 
               params[0].securities.authorized = authorized;
             }
