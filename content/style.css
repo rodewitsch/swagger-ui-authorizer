@@ -118,11 +118,17 @@ auth-modal auth-block-profile-request-type .params-wrapper textarea {
   margin-left: 8px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .25);
   resize: vertical;
-}          
-auth-modal auth-block-profile-request-type .params-wrapper input[type="text"]:focus, 
-auth-modal auth-block-profile-request-type .params-wrapper input[type="number"]:focus, 
-auth-modal auth-block-profile-request-type .params-wrapper input[type="text"]:focus-visible, 
-auth-modal auth-block-profile-request-type .params-wrapper input[type="number"]:focus-visible {
+}         
+auth-modal auth-block-profile-request-type .params-wrapper textarea.invalid,
+auth-modal auth-block-profile-request-type .params-wrapper input[type="number"].invalid {
+  animation: shake .4s 1;
+  background: #feebeb;
+  border: 2px solid #f93e3e !important;
+} 
+auth-modal auth-block-profile-request-type .params-wrapper input[type="text"]:focus:not(.invalid), 
+auth-modal auth-block-profile-request-type .params-wrapper input[type="number"]:focus(.invalid), 
+auth-modal auth-block-profile-request-type .params-wrapper input[type="text"]:focus-visible(.invalid), 
+auth-modal auth-block-profile-request-type .params-wrapper input[type="number"]:focus-visible(.invalid) {
   border: 2px solid #61affe;
 }
 auth-modal auth-block-profile-request-type .params-wrapper input[type="number"] {

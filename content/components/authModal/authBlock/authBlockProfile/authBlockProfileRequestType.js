@@ -39,7 +39,6 @@ class AuthBlockProfileRequestType extends HTMLElement {
 
     let schemeProfile = authorizations.find((auth) => auth.id === profileId) || defaultProfile;
 
-
     this.render = async () => {
       while (this.lastChild) this.removeChild(this.lastChild);
 
@@ -161,6 +160,27 @@ class AuthBlockProfileRequestType extends HTMLElement {
 
       this.querySelectorAll('.parameters-value').forEach((element) => {
         element.addEventListener('change', (event) => {
+
+          if (event.target.dataset.parametersProperty === 'auth_value_ttl') {
+            if (event.target.value <= 0) { event.target.classList.add('invalid'); return; }
+            event.target.classList.remove('invalid');
+          }
+
+          if (event.target.dataset.parametersProperty === 'auth_value_source') {
+            if (!event.target.value) { event.target.classList.add('invalid'); return; }
+            event.target.classList.remove('invalid');
+          }
+
+          if (event.target.tagName === 'TEXTAREA') {
+            try {
+              JSON.parse(event.target.value);
+              event.target.classList.remove('invalid');
+            } catch (error) {
+              event.target.classList.add('invalid');
+              return;
+            }
+          }
+
           if (event.target.tagName === 'TEXTAREA') {
             schemeProfile.parameters[event.target.dataset.parametersProperty] = event.target.value ? JSON.parse(event.target.value) : null;
           } else {
@@ -172,6 +192,10 @@ class AuthBlockProfileRequestType extends HTMLElement {
       });
 
       this.querySelector('input.profile-name-value').addEventListener('change', (event) => {
+
+        if (!event.target.value) { event.target.classList.add('invalid'); return; }
+        event.target.classList.remove('invalid');
+
         schemeProfile.label = event.target.value;
         this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
         this.render();
