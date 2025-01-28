@@ -4,7 +4,7 @@ class AuthModal extends HTMLElement {
 
     const securitySchemes = SwaggerUIAuthorizerModule.getSecuritySchemes();
 
-    this.subscriptions = [ExtStore.subscribe('authorizations', () => this.render())];
+    this.subscriptions = [SwaggerUIAuthorizationStore.subscribe('authorizations', () => this.render())];
 
     this.render = async () => {
       while (this.lastChild) this.removeChild(this.lastChild);
@@ -51,7 +51,7 @@ class AuthModal extends HTMLElement {
    * Called when the element is removed from the document.
    */
   disconnectedCallback() {
-    this.subscriptions.forEach((subscription) => ExtStore.unsubscribe(subscription));
+    this.subscriptions.forEach((subscription) => SwaggerUIAuthorizationStore.unsubscribe(subscription));
   }
 }
 

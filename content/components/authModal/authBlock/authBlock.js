@@ -37,7 +37,7 @@ class AuthBlock extends HTMLElement {
           if (auth.label === event.target.value) auth.current = true;
           SwaggerUIAuthorizerModule.saveAuthorization(auth);
         });
-        ExtStore.authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
+        SwaggerUIAuthorizationStore.authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
       });
 
       return true;

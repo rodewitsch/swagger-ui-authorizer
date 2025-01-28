@@ -1,5 +1,5 @@
 /* eslint-disable no-redeclare */
-class Store {
+class SwaggerUIAuthorizationStoreService {
   constructor() {
     this._store = {
       authorizations: {
@@ -47,4 +47,4 @@ class Store {
 }
 
 // eslint-disable-next-line no-unused-vars
-const ExtStore = new Store();
+const SwaggerUIAuthorizationStore = new SwaggerUIAuthorizationStoreService();

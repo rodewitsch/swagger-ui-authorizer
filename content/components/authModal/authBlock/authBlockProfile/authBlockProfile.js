@@ -14,6 +14,9 @@ class AuthBlockProfile extends HTMLElement {
     const profileType = (schemeProfile && schemeProfile.profile_type) || 'request';
 
     this.render = async () => {
+
+      while (this.lastChild) this.removeChild(this.lastChild);
+
       const TEMPLATE_CONTENT = `
         <div class="opblock ${schemeProfile && schemeProfile.id ? 'opblock-get' : 'opblock-post'}">
 
@@ -66,7 +69,7 @@ class AuthBlockProfile extends HTMLElement {
           const invalidForm = this.querySelector('input.invalid, textarea.invalid');
           if (invalidForm) return alert('Fields contain invalid values');
           SwaggerUIAuthorizerModule.saveAuthorization(schemeProfile);
-          ExtStore.authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
+          SwaggerUIAuthorizationStore.authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
         });
       }
 
@@ -75,13 +78,17 @@ class AuthBlockProfile extends HTMLElement {
         removeBtn.addEventListener('click', () => {
           if (!confirm('Are you sure you want to remove this profile?')) return;
           SwaggerUIAuthorizerModule.removeAuthorization(schemeProfile.id);
-          ExtStore.authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
+          SwaggerUIAuthorizationStore.authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
         });
       }
 
       const closeBtn = this.querySelector('button.close');
       if (closeBtn) {
-        closeBtn.addEventListener('click', (event) => event.currentTarget.closest('auth-block-profile').classList.toggle('open'));
+        closeBtn.addEventListener('click', (event) => {
+          event.currentTarget.closest('auth-block-profile').classList.toggle('open');
+          this.render();
+        });
+
       }
 
       (this.querySelectorAll(`input[name="${profileIdentifier}-profile-type"]`) || []).forEach((radio) => {
