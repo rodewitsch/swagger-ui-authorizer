@@ -7,19 +7,10 @@ class AuthBlock extends HTMLElement {
     const schemeProfiles = authorizations.filter((auth) => auth.scheme === scheme.security_scheme_name);
 
     this.render = async () => {
-      let TEMPLATE_CONTENT;
-      TEMPLATE_CONTENT = `
-        <style>
-          .auth-block h4 {
-            display: flex;
-            justify-content: space-between;
-          }
-        </style>
-
+      const TEMPLATE_CONTENT = `
         <div class="auth-block">
           <h4><span><code>${scheme.security_scheme_name}</code>
             &nbsp; (${scheme.scheme}, ${scheme.type})</span>
-
             <div>
               <label>Current profile</label>
               <select class="current-profile-selector" aria-label="Media Type" class="content-type">
@@ -37,7 +28,6 @@ class AuthBlock extends HTMLElement {
 
       const TEMPLATE = document.createElement('template');
       TEMPLATE.innerHTML = TEMPLATE_CONTENT;
-
       this.appendChild(TEMPLATE.content.cloneNode(true));
 
       this.querySelector('.current-profile-selector').addEventListener('change', (event) => {

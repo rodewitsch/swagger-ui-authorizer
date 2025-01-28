@@ -50,80 +50,7 @@ class AuthBlockProfileRequestType extends HTMLElement {
       const hasHeaders = Boolean(request.operation.parameters.filter((param) => param.in === 'header').length);
       const hasBody = request.method !== 'get';
 
-      let TEMPLATE_CONTENT;
-      TEMPLATE_CONTENT = `
-        <style>
-          .method {
-            font-weight: bold;
-          }
-          auth-block-profile-request-type .params-wrapper {
-            display: flex;
-            flex-direction: row;
-          }
-          auth-block-profile-request-type .params-wrapper label {
-            width: 100px;
-            padding-top: 10px;
-          }
-          auth-block-profile-request-type .params-wrapper select {
-            box-shadow: none;
-            background-color: hsla(0,0%,100%,.8);
-            cursor: pointer;
-            outline: none;
-            border: none;
-            margin: 5px 0 5px 8px;
-            width: 100%;
-            border: 2px solid #d9d9d9;
-          }          
-          auth-block-profile-request-type .params-wrapper select:focus, 
-          auth-block-profile-request-type .params-wrapper select:focus-visible {
-            border: 2px solid #61affe;
-          }
-          auth-block-profile-request-type .params-wrapper textarea {
-            min-height: 100px !important;
-            height: 100px;
-            margin-left: 8px;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .25);
-            resize: vertical;
-          }          
-          auth-block-profile-request-type .params-wrapper input[type="text"]:focus, 
-          auth-block-profile-request-type .params-wrapper input[type="number"]:focus, 
-          auth-block-profile-request-type .params-wrapper input[type="text"]:focus-visible, 
-          auth-block-profile-request-type .params-wrapper input[type="number"]:focus-visible {
-            border: 2px solid #61affe;
-          }
-          auth-block-profile-request-type .params-wrapper input[type="number"] {
-            background: #fff;
-            border: 1px solid #d9d9d9;
-            border-radius: 4px;
-            margin: 5px 0;
-            min-width: 100px;
-            padding: 8px 10px;
-          }
-          auth-block-profile-request-type .params-wrapper input[type="text"], 
-          auth-block-profile-request-type .params-wrapper input[type="number"] {
-            font-family: monospace;
-            font-size: 12px;
-            font-weight: 600;
-            outline: none;
-            height: 30px;
-            width: 100%;
-            color: #3b4151;
-            margin-left: 8px;
-          }
-          auth-block-profile .opblock-summary {
-            padding: 5px;
-          }    
-          auth-block-profile .profile-type-wrapper.opblock-section-header {
-            padding-left: 15px !important;
-            margin-left: -15px;
-            margin-right: -15px;
-          }      
-          auth-block-profile .profile-type-wrapper.opblock-section-header>label {
-            margin: 0 !important;
-          }
-          auth-block-profile-request-type form {
-          }
-        </style>
+      const TEMPLATE_CONTENT = `
         <form>
 
             <div class="params-wrapper">
@@ -133,7 +60,7 @@ class AuthBlockProfileRequestType extends HTMLElement {
 
             <div class="params-wrapper">
               <label>Request</label>
-              <select>
+              <select data-parameters-property="operation_id" class="parameters-value">
                 ${API.map((request) => `<option ${schemeProfile.parameters.operation_id === request.operation_id ? 'selected' : ''} value="${request.operation_id}">${request.method.toUpperCase()} - ${request.path}</span></option>`).join('')}
               </select>
             </div>
@@ -141,7 +68,7 @@ class AuthBlockProfileRequestType extends HTMLElement {
             ${hasHeaders ? `
               <div class="params-wrapper">
                   <label>Headers</label>
-                  <textarea spellcheck="false" class="headers-value">${JSON.stringify(schemeProfile.parameters.headers, null, 2)}</textarea>
+                  <textarea spellcheck="false" data-parameters-property="headers" class="parameters-value">${JSON.stringify(schemeProfile.parameters.headers, null, 2)}</textarea>
               </div>  
             `: ''}
 
@@ -149,33 +76,33 @@ class AuthBlockProfileRequestType extends HTMLElement {
             ${hasQueryParams ? `
               <div class="params-wrapper">
                   <label>Query</label>
-                  <textarea spellcheck="false" class="query-value">${JSON.stringify(schemeProfile.parameters.query, null, 2)}</textarea>
+                  <textarea spellcheck="false" data-parameters-property="query" class="parameters-value">${JSON.stringify(schemeProfile.parameters.query, null, 2)}</textarea>
               </div>
             `: ''}
 
             ${hasPathParams ? `
               <div class="params-wrapper">
                   <label>Parameters</label>
-                  <textarea spellcheck="false" class="parameters-value">${JSON.stringify(schemeProfile.parameters.parameters, null, 2)}</textarea>
+                  <textarea spellcheck="false" data-parameters-property="parameters" class="parameters-value">${JSON.stringify(schemeProfile.parameters.parameters, null, 2)}</textarea>
               </div>
             ` : ''}
 
             ${hasBody ? `
               <div class="params-wrapper">
                 <label>Body</label>
-                <textarea spellcheck="false" class="body-value">${JSON.stringify(schemeProfile.parameters.body, null, 2)}</textarea>
+                <textarea spellcheck="false" data-parameters-property="body" class="parameters-value">${JSON.stringify(schemeProfile.parameters.body, null, 2)}</textarea>
               </div>
             ` : ''}
 
 
             <div class="params-wrapper">
               <label>Value source</label>
-              <input spellcheck="false" class="source-value" type="text" placeholder="response.body.access_token" value="${schemeProfile.parameters.auth_value_source}" />
+              <input spellcheck="false" data-parameters-property="auth_value_source" class="parameters-value" type="text" placeholder="response.body.access_token" value="${schemeProfile.parameters.auth_value_source}" />
             </div>
 
             <div class="params-wrapper">
               <label>Value TTL</label>
-              <input spellcheck="false" class="source-ttl" type="number" placeholder="auth token life time in minutes (not needed for JWT)" value="${schemeProfile.parameters.auth_value_ttl || ''}" />
+              <input spellcheck="false" data-parameters-property="auth_value_ttl" class="parameters-value" type="number" placeholder="auth token life time in minutes (not needed for JWT)" value="${schemeProfile.parameters.auth_value_ttl || ''}" />
             </div>
 
         </form>
@@ -225,53 +152,27 @@ class AuthBlockProfileRequestType extends HTMLElement {
           schemeProfile.parameters.headersParams = {};
         }
 
-        if (request.operation.requestBody) {
-          schemeProfile.parameters.body = {};
-        }
+        if (request.operation.requestBody) schemeProfile.parameters.body = {};
 
         this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
 
         this.render();
       });
 
-      this.querySelector('input.profile-name-value') && this.querySelector('input.profile-name-value').addEventListener('change', (event) => {
+      this.querySelectorAll('.parameters-value').forEach((element) => {
+        element.addEventListener('change', (event) => {
+          if (event.target.tagName === 'TEXTAREA') {
+            schemeProfile.parameters[event.target.dataset.parametersProperty] = event.target.value ? JSON.parse(event.target.value) : null;
+          } else {
+            schemeProfile.parameters[event.target.dataset.parametersProperty] = event.target.value;
+          }
+          this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
+          this.render();
+        });
+      });
+
+      this.querySelector('input.profile-name-value').addEventListener('change', (event) => {
         schemeProfile.label = event.target.value;
-        this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
-        this.render();
-      });
-
-      this.querySelector('input.source-value') && this.querySelector('input.source-value').addEventListener('change', (event) => {
-        schemeProfile.parameters.auth_value_source = event.target.value;
-        this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
-        this.render();
-      });
-
-      this.querySelector('input.source-ttl') && this.querySelector('input.source-ttl').addEventListener('change', (event) => {
-        schemeProfile.parameters.auth_value_ttl = event.target.value;
-        this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
-        this.render();
-      });
-
-      this.querySelector('textarea.headers-value') && this.querySelector('textarea.headers-value').addEventListener('change', (event) => {
-        schemeProfile.parameters.headers = event.target.value ? JSON.parse(event.target.value) : null;
-        this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
-        this.render();
-      });
-
-      this.querySelector('textarea.body-value') && this.querySelector('textarea.body-value').addEventListener('change', (event) => {
-        schemeProfile.parameters.body = event.target.value ? JSON.parse(event.target.value) : null;
-        this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
-        this.render();
-      });
-
-      this.querySelector('textarea.query-value') && this.querySelector('textarea.query-value').addEventListener('change', (event) => {
-        schemeProfile.parameters.query = event.target.value ? JSON.parse(event.target.value) : null;
-        this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
-        this.render();
-      });
-
-      this.querySelector('textarea.parameters-value') && this.querySelector('textarea.parameters-value').addEventListener('change', (event) => {
-        schemeProfile.parameters.parameters = event.target.value ? JSON.parse(event.target.value) : null;
         this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
         this.render();
       });

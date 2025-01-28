@@ -9,25 +9,7 @@ class AuthModal extends HTMLElement {
     this.render = async () => {
       while (this.lastChild) this.removeChild(this.lastChild);
 
-      let TEMPLATE_CONTENT;
-      TEMPLATE_CONTENT = `
-        <style>
-          .modal-ux {
-            width: 55vw !important;
-            max-width: 55vw !important;
-            min-width: 55vw !important;
-          }
-          .modal-ux .auth-container {
-            padding: 0 !important;
-          }
-          .modal-ux .opblock-tag {
-            padding: 10px 20px 10px 20px !important;
-          }
-          .modal-ux .auth-container auth-block-profile {
-            display: block;
-          }
-        </style>
-
+      const TEMPLATE_CONTENT = `
         <div class="dialog-ux">
           <div class="backdrop-ux"></div>
           <div class="modal-ux">
@@ -39,7 +21,7 @@ class AuthModal extends HTMLElement {
                 </div>
                 <div class="modal-ux-content">
                   <div class="auth-container">
-                      ${securitySchemes.map((scheme) => `<auth-block scheme="${scheme.security_scheme_name}"></auth-block>`).join('')}
+                    ${securitySchemes.map((scheme) => `<auth-block scheme="${scheme.security_scheme_name}"></auth-block>`).join('')}
                   </div>
                 </div>
               </div>
@@ -50,7 +32,6 @@ class AuthModal extends HTMLElement {
 
       const TEMPLATE = document.createElement('template');
       TEMPLATE.innerHTML = TEMPLATE_CONTENT;
-
       this.appendChild(TEMPLATE.content.cloneNode(true));
 
       this.querySelector('button.close-modal').addEventListener('click', () => this.remove(), { once: true });
@@ -67,12 +48,10 @@ class AuthModal extends HTMLElement {
   }
 
   /**
- * Called when the element is removed from the document.
- */
+   * Called when the element is removed from the document.
+   */
   disconnectedCallback() {
-    if (this.subscriptions && this.subscriptions.length) {
-      this.subscriptions.forEach((subscription) => ExtStore.unsubscribe(subscription));
-    }
+    this.subscriptions.forEach((subscription) => ExtStore.unsubscribe(subscription));
   }
 }
 

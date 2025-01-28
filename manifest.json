@@ -11,6 +11,9 @@
   "content_scripts": [
     {
       "world": "MAIN",
+      "css": [
+        "content/style.css"
+      ],
       "js": [
         "node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
         "core.js",
@@ -18,7 +21,6 @@
         "content/content.js",
         "content/components/authModal/authModal.js",
         "content/components/authModal/authBlock/authBlock.js",
-        "content/components/authModal/authBlock/authBlockProfile/authBlockProfiles.js",
         "content/components/authModal/authBlock/authBlockProfile/authBlockProfile.js",
         "content/components/authModal/authBlock/authBlockProfile/authBlockProfileRequestType.js"
       ],

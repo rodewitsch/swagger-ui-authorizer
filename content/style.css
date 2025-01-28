@@ -1,0 +1,174 @@
+auth-modal .modal-ux {
+  width: 55vw !important;
+  max-width: 55vw !important;
+  min-width: 55vw !important;
+}
+auth-modal .modal-ux .auth-container {
+  padding: 0 !important;
+}
+auth-modal .modal-ux .opblock-tag {
+  padding: 10px 20px 10px 20px !important;
+}
+auth-modal .modal-ux .auth-container auth-block-profile {
+  display: block;
+}
+auth-modal .auth-block h4 {
+  display: flex;
+  justify-content: space-between;
+}
+auth-modal .opblock-summary {
+  height: 35px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px 5px 0 0;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+auth-modal .opblock-summary:hover {
+  background: rgba(0, 0, 0, .02);
+}
+auth-modal auth-block-profile:not(.open)[profile-id] .opblock-summary::after {
+  content: "˅";
+}
+auth-modal auth-block-profile.open[profile-id] .opblock-summary::after {
+  content: "˄";
+}
+auth-modal auth-block-profile:not(.open) .opblock-summary::after {
+  content: "+";
+}
+auth-modal auth-block-profile.open .opblock-summary::after {
+  content: "x";
+}
+auth-modal .opblock-body {
+  display: none;
+}
+auth-modal auth-block-profile.open .opblock-summary {
+  border-bottom: 1px solid #000;
+}
+auth-modal auth-block-profile.open .opblock-body {
+  display: block;
+  padding: 15px;
+}
+auth-modal .radio-wrapper {
+  display: flex;
+  cursor: not-allowed;
+  align-items: center;
+  justify-content: center;
+}
+auth-modal .profile-type-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+}
+auth-modal .profile-type-wrapper label {
+  cursor: pointer;
+  width: 100px;
+}
+auth-modal .profile-type-wrapper .profile-type-selector {
+  display: flex;
+  margin-left: 8px;
+}
+auth-modal .profile-type-selector label {
+  padding: 0 0 0 0;
+  margin: 0 0 0 10px !important;
+}
+auth-modal .profile-type-selector input {
+  cursor: pointer;
+}
+auth-modal .buttons-wrapper {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+auth-modal .buttons-wrapper button {
+  margin-right: 10px;
+}
+auth-modal .method {
+  font-weight: bold;
+}
+auth-modal auth-block-profile-request-type .params-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+auth-modal auth-block-profile-request-type .params-wrapper label {
+  width: 100px;
+  padding-top: 10px;
+}
+auth-modal auth-block-profile-request-type .params-wrapper select {
+  box-shadow: none;
+  background-color: hsla(0,0%,100%,.8);
+  cursor: pointer;
+  outline: none;
+  border: none;
+  margin: 5px 0 5px 8px;
+  width: 100%;
+  border: 2px solid #d9d9d9;
+}          
+auth-modal auth-block-profile-request-type .params-wrapper select:focus, 
+auth-modal auth-block-profile-request-type .params-wrapper select:focus-visible {
+  border: 2px solid #61affe;
+}
+auth-modal auth-block-profile-request-type .params-wrapper textarea {
+  min-height: 100px !important;
+  height: 100px;
+  margin-left: 8px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .25);
+  resize: vertical;
+}          
+auth-modal auth-block-profile-request-type .params-wrapper input[type="text"]:focus, 
+auth-modal auth-block-profile-request-type .params-wrapper input[type="number"]:focus, 
+auth-modal auth-block-profile-request-type .params-wrapper input[type="text"]:focus-visible, 
+auth-modal auth-block-profile-request-type .params-wrapper input[type="number"]:focus-visible {
+  border: 2px solid #61affe;
+}
+auth-modal auth-block-profile-request-type .params-wrapper input[type="number"] {
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  margin: 5px 0;
+  min-width: 100px;
+  padding: 8px 10px;
+}
+auth-modal auth-block-profile-request-type .params-wrapper input[type="text"], 
+auth-modal auth-block-profile-request-type .params-wrapper input[type="number"] {
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: 600;
+  outline: none;
+  height: 30px;
+  width: 100%;
+  color: #3b4151;
+  margin-left: 8px;
+}
+auth-modal auth-block-profile .opblock-summary {
+  padding: 5px;
+}    
+auth-modal auth-block-profile .profile-type-wrapper.opblock-section-header {
+  padding-left: 15px !important;
+  margin-left: -15px;
+  margin-right: -15px;
+}      
+auth-modal auth-block-profile .profile-type-wrapper.opblock-section-header>label {
+  margin: 0 !important;
+}
+auth-modal .opblock-summary {
+  height: 35px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+auth-modal auth-block-profile-body {
+  height: 0;
+  display: block;
+  overflow: hidden;
+}
+auth-modal auth-block-profile.open auth-block-profile-body {
+  height: auto;
+}
