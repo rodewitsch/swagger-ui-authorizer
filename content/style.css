@@ -91,6 +91,7 @@ auth-modal .method {
   font-weight: bold;
 }
 auth-modal auth-block-profile-request-type .params-wrapper {
+  position: relative;
   display: flex;
   flex-direction: row;
 }
@@ -100,7 +101,7 @@ auth-modal auth-block-profile-request-type .params-wrapper label {
 }
 auth-modal auth-block-profile-request-type .params-wrapper select {
   box-shadow: none;
-  background-color: hsla(0,0%,100%,.8);
+  background-color: hsla(0,0%,100%);
   cursor: pointer;
   outline: none;
   border: none;
@@ -177,4 +178,13 @@ auth-modal auth-block-profile-body {
 }
 auth-modal auth-block-profile.open auth-block-profile-body {
   height: auto;
+}
+auth-modal select.request-id-select {
+  top: 30px;
+  display: none;
+  position: absolute;
+  left: 92px;
+  width: 92.4% !important;
+  z-index: 999999;
+  background-image: none;
 }

@@ -49,6 +49,8 @@ class AuthBlockProfileRequestType extends HTMLElement {
       const hasHeaders = Boolean(request.operation.parameters.filter((param) => param.in === 'header').length);
       const hasBody = request.method !== 'get';
 
+      const selectedRequest = API.find((request) => request.operation_id === schemeProfile.parameters.operation_id);
+
       const TEMPLATE_CONTENT = `
         <form>
 
@@ -59,7 +61,8 @@ class AuthBlockProfileRequestType extends HTMLElement {
 
             <div class="params-wrapper">
               <label>Request</label>
-              <select data-parameters-property="operation_id" class="parameters-value">
+              <input class="request-id-input" type="text" placeholder="Search..." value="${selectedRequest.method.toUpperCase()} - ${selectedRequest.path}" />
+              <select size="10" data-parameters-property="operation_id" class="request-id-select">
                 ${API.map((request) => `<option ${schemeProfile.parameters.operation_id === request.operation_id ? 'selected' : ''} value="${request.operation_id}">${request.method.toUpperCase()} - ${request.path}</span></option>`).join('')}
               </select>
             </div>
@@ -112,7 +115,124 @@ class AuthBlockProfileRequestType extends HTMLElement {
 
       this.appendChild(TEMPLATE.content.cloneNode(true));
 
+
+      this.querySelector('.request-id-input').addEventListener('click', (event) => {
+        event.target.value = '';
+        this.querySelector('.request-id-select').style.display = 'block';
+        const selectBox = this.querySelector('.request-id-select');
+        const options = selectBox.querySelectorAll('option');
+        for (let i = 0; i < options.length; i++) {
+          options[i].style.display = 'block';
+        }
+        event.stopPropagation();
+      });
+
+      this.querySelector('.request-id-input').addEventListener('input', (event) => {
+        const searchValue = event.target.value.toLowerCase();
+        const selectBox = this.querySelector('.request-id-select');
+        const options = selectBox.querySelectorAll('option');
+
+        // Show the select box when typing
+        selectBox.style.display = 'block';
+
+        for (let i = 0; i < options.length; i++) {
+          const optionText = options[i].text.toLowerCase();
+          if (optionText.includes(searchValue)) {
+            options[i].style.display = 'block';
+          } else {
+            options[i].style.display = 'none';
+          }
+        }
+      });
+
+      this.querySelector('.request-id-input').addEventListener('keydown', (event) => {
+
+        event.target.focus();
+
+        if (event.key === 'Enter') {
+          const selectBox = this.querySelector('.request-id-select');
+          const selectedOption = selectBox.querySelector('option[selected]:not([style*="display: none"])');
+          if (selectedOption) {
+            this.querySelector('.request-id-input').value = selectedOption.text;
+            selectBox.style.display = 'none';
+
+            selectBox.value = selectedOption.value;
+            selectBox.dispatchEvent(new Event('change'));
+
+          }
+          event.preventDefault();
+          event.target.blur();
+        }
+
+        if (event.key === 'ArrowDown') {
+          const selectBox = this.querySelector('.request-id-select');
+          const selectedOption = selectBox.querySelector('option[selected]:not([style*="display: none"])');
+          if (selectedOption) {
+            selectedOption.removeAttribute('selected');
+            let nextOption = selectedOption.nextElementSibling;
+            while (nextOption && nextOption.style.display === 'none') {
+              nextOption = nextOption.nextElementSibling;
+            }
+            if (nextOption) {
+              nextOption.setAttribute('selected', 'selected');
+            } else {
+              let firstOption = selectBox.querySelector('option:not([style*="display: none"])');
+              if (firstOption) {
+                firstOption.setAttribute('selected', 'selected');
+              }
+            }
+          } else {
+            let firstOption = selectBox.querySelector('option:not([style*="display: none"])');
+            if (firstOption) {
+              firstOption.setAttribute('selected', 'selected');
+            }
+          }
+          event.preventDefault();
+        }
+
+        if (event.key === 'ArrowUp') {
+          const selectBox = this.querySelector('.request-id-select');
+          const selectedOption = selectBox.querySelector('option[selected]:not([style*="display: none"])');
+          if (selectedOption) {
+            selectedOption.removeAttribute('selected');
+            let prevOption = selectedOption.previousElementSibling;
+            while (prevOption && prevOption.style.display === 'none') {
+              prevOption = prevOption.previousElementSibling;
+            }
+            if (prevOption) {
+              prevOption.setAttribute('selected', 'selected');
+            } else {
+              let lastOption = selectBox.querySelector('option:not([style*="display: none"]):last-child');
+              if (lastOption) {
+                lastOption.setAttribute('selected', 'selected');
+              }
+            }
+          } else {
+            let lastOption = selectBox.querySelector('option:not([style*="display: none"]):last-child');
+            if (lastOption) {
+              lastOption.setAttribute('selected', 'selected');
+            }
+          }
+          event.preventDefault();
+        }
+      });
+
+
+      // Hide the select box when clicking outside
+      document.addEventListener('click', (event) => {
+        const selectBox = this.querySelector('.request-id-select');
+        const searchInput = this.querySelector('.request-id-input');
+        if (event.target !== searchInput && event.target !== selectBox) {
+          selectBox.style.display = 'none';
+        }
+        searchInput.value = `${selectedRequest.method.toUpperCase()} - ${selectedRequest.path}`;
+      });
+
+
       this.querySelector('select').addEventListener('change', (event) => {
+
+        this.querySelector('.request-id-select').style.display = 'none';
+
         schemeProfile.parameters.operation_id = event.target.value;
         this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
 
