@@ -171,6 +171,12 @@ const SwaggerUIAuthorizerModule = (() => {
               });
 
               const token = this.getValueByPath(response, authorization.parameters.auth_value_source.replace(/^response\./, ''));
+
+              if (!token) {
+                alert(`SwaggerUIAuthorizer preauth error \n\nToken not found in response object \n\n Please check path: ${authorization.parameters.auth_value_source} in response object`);
+                return params;
+              }
+
               ui.preauthorizeApiKey(securityRequirement, token);
               const authorizedMap = window.ui.getSystem().authSelectors.authorized();
 
