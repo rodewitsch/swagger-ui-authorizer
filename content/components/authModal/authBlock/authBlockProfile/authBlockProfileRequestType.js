@@ -124,6 +124,12 @@ class AuthBlockProfileRequestType extends HTMLElement {
         for (let i = 0; i < options.length; i++) {
           options[i].style.display = 'block';
         }
+
+        const selectedOption = selectBox.querySelector('option[selected]');
+        if (selectedOption) {
+          selectedOption.scrollIntoView({ block: 'nearest' });
+        }
+
         event.target.focus();
         event.target.value = '';
         event.stopPropagation();
