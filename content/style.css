@@ -151,6 +151,11 @@ auth-modal auth-block-profile-request-type .params-wrapper input[type="number"] 
   color: #3b4151;
   margin-left: 8px;
 }
+auth-modal .params-wrapper .select-arrow {
+  position: absolute;
+  top: 13px;
+  right: 10px;
+}
 auth-modal auth-block-profile .opblock-summary {
   padding: 5px;
 }    
@@ -179,12 +184,20 @@ auth-modal auth-block-profile-body {
 auth-modal auth-block-profile.open auth-block-profile-body {
   height: auto;
 }
+auth-modal .request-id-input::after {
+  content: "˅";
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: block;
+  z-index: 999;
+}
 auth-modal select.request-id-select {
   top: 30px;
   display: none;
   position: absolute;
-  left: 92px;
-  width: 92.4% !important;
   z-index: 999999;
   background-image: none;
+  width: calc(100% - 100px) !important;
+  margin-left: 100px !important;
 }

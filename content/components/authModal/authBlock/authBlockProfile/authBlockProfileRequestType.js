@@ -61,7 +61,8 @@ class AuthBlockProfileRequestType extends HTMLElement {
 
             <div class="params-wrapper">
               <label>Request</label>
-              <input class="request-id-input" type="text" placeholder="Search..." value="${selectedRequest.method.toUpperCase()} - ${selectedRequest.path}" />
+              <input spellcheck="false" class="request-id-input" type="text" value="${selectedRequest.method.toUpperCase()} - ${selectedRequest.path}" />
+              <span class="select-arrow">˅</span>
               <select size="10" data-parameters-property="operation_id" class="request-id-select">
                 ${API.map((request) => `<option ${schemeProfile.parameters.operation_id === request.operation_id ? 'selected' : ''} value="${request.operation_id}">${request.method.toUpperCase()} - ${request.path}</span></option>`).join('')}
               </select>
@@ -117,13 +118,14 @@ class AuthBlockProfileRequestType extends HTMLElement {
 
 
       this.querySelector('.request-id-input').addEventListener('click', (event) => {
-        event.target.value = '';
         this.querySelector('.request-id-select').style.display = 'block';
         const selectBox = this.querySelector('.request-id-select');
         const options = selectBox.querySelectorAll('option');
         for (let i = 0; i < options.length; i++) {
           options[i].style.display = 'block';
         }
+        event.target.focus();
+        event.target.value = '';
         event.stopPropagation();
       });
 
