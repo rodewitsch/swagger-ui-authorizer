@@ -78,6 +78,15 @@ const SwaggerUIAuthorizerModule = (() => {
     mapToObject: function (map) {
       return JSON.parse(JSON.stringify(map));
     },
+    base64UrlDecode: function (str) {
+      str = str
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+      while (str.length % 4) {
+        str += '=';
+      }
+      return atob(str);
+    },
     isJWT: function (token) {
       const parts = token.split('.');
       return parts.length === 3;
@@ -87,7 +96,7 @@ const SwaggerUIAuthorizerModule = (() => {
         return false;
       }
       try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
+        const payload = JSON.parse(this.base64UrlDecode(token.split('.')[1]));
         return payload && payload.exp && payload.exp > Date.now() / 1000;
       } catch (error) {
         return false;
