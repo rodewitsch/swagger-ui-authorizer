@@ -56,12 +56,12 @@ class AuthBlockProfileRequestType extends HTMLElement {
 
             <div class="params-wrapper">
               <label>Profile name</label>
-              <input spellcheck="false" placeholder="profile name" class="profile-name-value" type="text" value="${schemeProfile.label}" />
+              <input title="Authorization profile name" spellcheck="false" placeholder="profile name" class="profile-name-value" type="text" value="${schemeProfile.label}" />
             </div>
 
             <div class="params-wrapper">
               <label>Request</label>
-              <input spellcheck="false" class="request-id-input" type="text" value="${selectedRequest.method.toUpperCase()} - ${selectedRequest.path}" />
+              <input title="Authorization request" spellcheck="false" class="request-id-input" type="text" value="${selectedRequest.method.toUpperCase()} - ${selectedRequest.path}" />
               <span class="select-arrow">˅</span>
               <select size="10" data-parameters-property="operation_id" class="request-id-select">
                 ${API.map((request) => `<option ${schemeProfile.parameters.operation_id === request.operation_id ? 'selected' : ''} value="${request.operation_id}">${request.method.toUpperCase()} - ${request.path}</span></option>`).join('')}
@@ -71,7 +71,7 @@ class AuthBlockProfileRequestType extends HTMLElement {
             ${hasHeaders ? `
               <div class="params-wrapper">
                   <label>Headers</label>
-                  <textarea spellcheck="false" data-parameters-property="headers" class="parameters-value">${JSON.stringify(schemeProfile.parameters.headers, null, 2)}</textarea>
+                  <textarea title="Authorization request headers" spellcheck="false" data-parameters-property="headers" class="parameters-value">${JSON.stringify(schemeProfile.parameters.headers, null, 2)}</textarea>
               </div>  
             `: ''}
 
@@ -79,33 +79,33 @@ class AuthBlockProfileRequestType extends HTMLElement {
             ${hasQueryParams ? `
               <div class="params-wrapper">
                   <label>Query</label>
-                  <textarea spellcheck="false" data-parameters-property="query" class="parameters-value">${JSON.stringify(schemeProfile.parameters.query, null, 2)}</textarea>
+                  <textarea title="Authorization request query parameters" spellcheck="false" data-parameters-property="query" class="parameters-value">${JSON.stringify(schemeProfile.parameters.query, null, 2)}</textarea>
               </div>
             `: ''}
 
             ${hasPathParams ? `
               <div class="params-wrapper">
                   <label>Parameters</label>
-                  <textarea spellcheck="false" data-parameters-property="parameters" class="parameters-value">${JSON.stringify(schemeProfile.parameters.parameters, null, 2)}</textarea>
+                  <textarea title="Authorization request path parameters" spellcheck="false" data-parameters-property="parameters" class="parameters-value">${JSON.stringify(schemeProfile.parameters.parameters, null, 2)}</textarea>
               </div>
             ` : ''}
 
             ${hasBody ? `
               <div class="params-wrapper">
                 <label>Body</label>
-                <textarea spellcheck="false" data-parameters-property="body" class="parameters-value">${JSON.stringify(schemeProfile.parameters.body, null, 2)}</textarea>
+                <textarea title="Authorization request body" spellcheck="false" data-parameters-property="body" class="parameters-value">${JSON.stringify(schemeProfile.parameters.body, null, 2)}</textarea>
               </div>
             ` : ''}
 
 
             <div class="params-wrapper">
               <label>Value source</label>
-              <input spellcheck="false" data-parameters-property="auth_value_source" class="parameters-value" type="text" placeholder="response.body.access_token" value="${schemeProfile.parameters.auth_value_source}" />
+              <input title="Path to authorization token" spellcheck="false" data-parameters-property="auth_value_source" class="parameters-value" type="text" placeholder="response.body.access_token" value="${schemeProfile.parameters.auth_value_source}" />
             </div>
 
             <div class="params-wrapper">
-              <label>Value TTL</label>
-              <input spellcheck="false" data-parameters-property="auth_value_ttl" class="parameters-value" type="number" placeholder="auth token life time in minutes (not needed for JWT)" value="${schemeProfile.parameters.auth_value_ttl || ''}" />
+              <label>Value TTL (min)</label>
+              <input title="Authorization token 'time to live' in minutes" spellcheck="false" data-parameters-property="auth_value_ttl" class="parameters-value" type="number" placeholder="auth token life time in minutes (not needed for JWT)" value="${schemeProfile.parameters.auth_value_ttl || ''}" />
             </div>
 
         </form>

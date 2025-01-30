@@ -30,11 +30,11 @@ class AuthBlockProfile extends HTMLElement {
             <div class="profile-type-wrapper opblock-section-header">
               <label>Profile type</label>
               <div class="profile-type-selector">
-                <div class="radio-wrapper" style="cursor: not-allowed;">
+                <div title="Authorization profile based on constant token" class="radio-wrapper" style="cursor: not-allowed;">
                   <input style="pointer-events: none;" type="radio" id="${profileIdentifier}-key" name="${profileIdentifier}-profile-type" value="value" ${profileType === 'value' ? 'checked' : ''} />
                   <label style="pointer-events: none;" for="${profileIdentifier}-key">value</label>
                 </div>
-                <div class="radio-wrapper" style="cursor: pointer;">
+                <div title="Authorization profile that performs authorization request" class="radio-wrapper" style="cursor: pointer;">
                   <input type="radio" id="${profileIdentifier}-request" name="${profileIdentifier}-profile-type" value="request" ${profileType === 'request' ? 'checked' : ''}  />
                   <label for="${profileIdentifier}-request">request</label>
                 </div>
