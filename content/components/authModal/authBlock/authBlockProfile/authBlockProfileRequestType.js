@@ -290,7 +290,7 @@ class AuthBlockProfileRequestType extends HTMLElement {
         element.addEventListener('change', (event) => {
 
           if (event.target.dataset.parametersProperty === 'auth_value_ttl') {
-            if (event.target.value <= 0) { event.target.classList.add('invalid'); return; }
+            if (event.target.value && event.target.value <= 0) { event.target.classList.add('invalid'); return; }
             event.target.classList.remove('invalid');
           }
 
