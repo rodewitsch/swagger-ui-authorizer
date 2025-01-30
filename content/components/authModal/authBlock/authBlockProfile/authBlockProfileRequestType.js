@@ -279,7 +279,18 @@ class AuthBlockProfileRequestType extends HTMLElement {
           schemeProfile.parameters.headersParams = {};
         }
 
-        if (request.operation.requestBody) schemeProfile.parameters.body = {};
+        if (request.operation.requestBody) {
+          try {
+            if (request.operation.requestBody.content['application/json']) {
+              const schema = request.operation.requestBody.content['application/json'].schema;
+              const schemaObject = SwaggerUIAuthorizerModule.createJsonObjectFromSchema(schema);
+              schemeProfile.parameters.body = schemaObject;
+            }
+          } catch (error) {
+            console.error(error);
+            schemeProfile.parameters.body = {};
+          }
+        }
 
         this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
 

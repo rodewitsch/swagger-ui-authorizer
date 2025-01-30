@@ -51,10 +51,47 @@ const SwaggerUIAuthorizerModule = (() => {
       }
       return null;
     },
-    getSchemaObject: function (schema) {
-      const API = this.getAPI();
-      const schemaObj = API.components.schemas[schema];
-      return schemaObj;
+    resolveRef: function (schema) {
+      const definitions = this.getAPI().components.schemas;
+      if (schema.$ref) {
+        const refPath = schema.$ref.split('/').pop();
+        return definitions[refPath];
+      }
+      return schema;
+    },
+    createJsonObjectFromSchema: function (schema) {
+      const definitions = this.getAPI().components.schemas;
+      schema = this.resolveRef(schema, definitions);
+
+      if (!schema || typeof schema !== 'object') {
+        return null;
+      }
+
+      if (schema.type === 'object') {
+        const obj = {};
+        for (const key in schema.properties) {
+          obj[key] = this.createJsonObjectFromSchema(schema.properties[key], definitions);
+        }
+        return obj;
+      }
+
+      if (schema.type === 'array') {
+        return [this.createJsonObjectFromSchema(schema.items, definitions)];
+      }
+
+      // Handle primitive types
+      switch (schema.type) {
+        case 'string':
+          return '';
+        case 'number':
+          return 0;
+        case 'integer':
+          return 0;
+        case 'boolean':
+          return false;
+        default:
+          return null;
+      }
     },
     getSecuritySchemes: function (name) {
       const API = this.getAPI();
