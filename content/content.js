@@ -54,6 +54,7 @@
 
       const input = document.createElement('input');
       input.type = 'text';
+      input.setAttribute('readonly', true);
       input.style.marginLeft = '10px';
       input.value = savedSecurity.value;
 

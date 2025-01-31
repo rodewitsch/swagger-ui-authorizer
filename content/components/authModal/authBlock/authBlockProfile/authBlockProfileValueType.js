@@ -32,7 +32,7 @@ class AuthBlockProfileValueType extends HTMLElement {
 
             <div class="params-wrapper">
               <label>Value source</label>
-              <input title="Authorization value" spellcheck="false" data-parameters-property="auth_value" class="parameters-value" type="text" required="true" placeholder="api key" value="${schemeProfile.parameters.auth_value}" />
+              <input title="Authorization value" spellcheck="false" data-parameters-property="auth_value" class="parameters-value" type="text" required="true" placeholder="api key" value="${schemeProfile.parameters.auth_value || ''}" />
             </div>
 
         </form>
