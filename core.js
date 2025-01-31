@@ -168,7 +168,7 @@ const SwaggerUIAuthorizerModule = (() => {
           const securityScheme = this.getSecuritySchemes(securityRequirement);
 
           // Check if the operation requires authentication
-          if (securityScheme.scheme === 'bearer') {
+          if (securityScheme.scheme === 'bearer' || securityScheme.scheme === 'basic') {
 
             // Check if request is already authorized
             const currentAuthorization = params[0].securities.authorized && params[0].securities.authorized[securityRequirement];
