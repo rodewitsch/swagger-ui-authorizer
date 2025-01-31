@@ -56,7 +56,7 @@ class AuthBlockProfileRequestType extends HTMLElement {
 
             <div class="params-wrapper">
               <label>Profile name</label>
-              <input title="Authorization profile name" spellcheck="false" placeholder="profile name" class="profile-name-value" type="text" value="${schemeProfile.label}" />
+              <input title="Authorization profile name" spellcheck="false" placeholder="profile name" class="profile-name-value" type="text" required="true" value="${schemeProfile.label}" />
             </div>
 
             <div class="params-wrapper">
@@ -100,7 +100,7 @@ class AuthBlockProfileRequestType extends HTMLElement {
 
             <div class="params-wrapper">
               <label>Value source</label>
-              <input title="Path to authorization token" spellcheck="false" data-parameters-property="auth_value_source" class="parameters-value" type="text" placeholder="response.body.access_token" value="${schemeProfile.parameters.auth_value_source}" />
+              <input title="Path to authorization token" spellcheck="false" data-parameters-property="auth_value_source" class="parameters-value" type="text" required="true" placeholder="response.body.access_token" value="${schemeProfile.parameters.auth_value_source}" />
             </div>
 
             <div class="params-wrapper">

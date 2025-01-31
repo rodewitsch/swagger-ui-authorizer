@@ -66,8 +66,12 @@ class AuthBlockProfile extends HTMLElement {
       const saveBtn = this.querySelector('button.save');
       if (saveBtn) {
         saveBtn.addEventListener('click', () => {
-          const invalidForm = this.querySelector('input.invalid, textarea.invalid');
-          if (invalidForm) return alert('Fields contain invalid values');
+          const invalidElement = this.querySelector('input.invalid, textarea.invalid') || this.querySelector('input[required][value=""], input[required]:not([value])');
+          if (invalidElement) {
+            invalidElement.classList.add('invalid');
+            invalidElement.focus();
+            return alert('Fields contain invalid values');
+          }
           SwaggerUIAuthorizerModule.saveAuthorization(schemeProfile);
           SwaggerUIAuthorizationStore.authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
         });
