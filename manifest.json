@@ -22,7 +22,8 @@
         "content/components/authModal/authModal.js",
         "content/components/authModal/authBlock/authBlock.js",
         "content/components/authModal/authBlock/authBlockProfile/authBlockProfile.js",
-        "content/components/authModal/authBlock/authBlockProfile/authBlockProfileRequestType.js"
+        "content/components/authModal/authBlock/authBlockProfile/authBlockProfileRequestType.js",
+        "content/components/authModal/authBlock/authBlockProfile/authBlockProfileValueType.js"
       ],
       "matches": [ 
         "<all_urls>"

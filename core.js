@@ -184,62 +184,72 @@ const SwaggerUIAuthorizerModule = (() => {
 
             if (authorization) {
 
-              if (authorization.parameters.auth_value_ttl && authorization.parameters.auth_value_date) {
-                const ttl = authorization.parameters.auth_value_ttl;
-                const authValueDate = new Date(authorization.parameters.auth_value_date);
-                const isTokenExpired = this.getDateDifferenceInMinutes(new Date(), authValueDate) > ttl;
-                if (!isTokenExpired) return params;
+              if (authorization.profile_type === 'value') {
+                ui.preauthorizeApiKey(securityRequirement, authorization.parameters.auth_value);
+                const authorizedMap = window.ui.getSystem().authSelectors.authorized();
+                const authorized = this.mapToObject(authorizedMap);
+                params[0].securities.authorized = authorized;
               }
 
-              const authRequestInfo = this.getRequestInfoByOperationId(authorization.parameters.operation_id);
+              if (authorization.profile_type === 'request') {
 
-              // Get the parameters
-              const authRequestParams = authorization.parameters;
+                if (authorization.parameters.auth_value_ttl && authorization.parameters.auth_value_date) {
+                  const ttl = authorization.parameters.auth_value_ttl;
+                  const authValueDate = new Date(authorization.parameters.auth_value_date);
+                  const isTokenExpired = this.getDateDifferenceInMinutes(new Date(), authValueDate) > ttl;
+                  if (!isTokenExpired) return params;
+                }
 
-              const prebuildRequest = window.ui.getSystem().fn.buildRequest({
-                spec: API,
-                operationId: authRequestInfo.operation.operationId,
-                parameters: { ...authRequestParams.parameters, ...authRequestParams.query },
-                securities: { authorized: this.mapToObject(window.ui.getSystem().authSelectors.authorized()) },
-                bodyParams: authRequestParams.body,
-              });
+                const authRequestInfo = this.getRequestInfoByOperationId(authorization.parameters.operation_id);
 
-              // Execute the request
-              const response = await window.ui.getSystem().fn.fetch({
-                ...prebuildRequest,
-                headers: {
-                  'Content-Type': 'application/json',
-                  ...prebuildRequest.headers,
-                  ...authRequestParams.headers
-                },
-                parameters: authRequestParams.parameters,
-                ...(authRequestInfo.method === 'get' ? {} : { body: JSON.stringify(authRequestParams.body || {}) }),
-              });
+                // Get the parameters
+                const authRequestParams = authorization.parameters;
 
-              const token = this.getValueByPath(response, authorization.parameters.auth_value_source.replace(/^response\./, ''));
+                const prebuildRequest = window.ui.getSystem().fn.buildRequest({
+                  spec: API,
+                  operationId: authRequestInfo.operation.operationId,
+                  parameters: { ...authRequestParams.parameters, ...authRequestParams.query },
+                  securities: { authorized: this.mapToObject(window.ui.getSystem().authSelectors.authorized()) },
+                  bodyParams: authRequestParams.body,
+                });
 
-              if (!token) {
-                alert(`SwaggerUIAuthorizer preauth error \n\nToken not found in response object \n\n Please check path: ${authorization.parameters.auth_value_source} in response object`);
-                return params;
+                // Execute the request
+                const response = await window.ui.getSystem().fn.fetch({
+                  ...prebuildRequest,
+                  headers: {
+                    'Content-Type': 'application/json',
+                    ...prebuildRequest.headers,
+                    ...authRequestParams.headers
+                  },
+                  parameters: authRequestParams.parameters,
+                  ...(authRequestInfo.method === 'get' ? {} : { body: JSON.stringify(authRequestParams.body || {}) }),
+                });
+
+                const token = this.getValueByPath(response, authorization.parameters.auth_value_source.replace(/^response\./, ''));
+
+                if (!token) {
+                  alert(`SwaggerUIAuthorizer preauth error \n\nToken not found in response object \n\n Please check path: ${authorization.parameters.auth_value_source} in response object`);
+                  return params;
+                }
+
+                ui.preauthorizeApiKey(securityRequirement, token);
+                const authorizedMap = window.ui.getSystem().authSelectors.authorized();
+
+                const authorized = this.mapToObject(authorizedMap);
+
+                const localStorageAuthorized = localStorage.getItem('authorized');
+                if (!localStorageAuthorized) {
+                  localStorage.setItem('authorized', JSON.stringify(authorized));
+                } else {
+                  const localStorageAuthorizedMap = JSON.parse(localStorageAuthorized);
+                  localStorage.setItem('authorized', JSON.stringify({ ...localStorageAuthorizedMap, ...authorized }));
+                }
+
+                authorization.parameters.auth_value_date = new Date().toISOString();
+                this.saveAuthorization(authorization);
+
+                params[0].securities.authorized = authorized;
               }
-
-              ui.preauthorizeApiKey(securityRequirement, token);
-              const authorizedMap = window.ui.getSystem().authSelectors.authorized();
-
-              const authorized = this.mapToObject(authorizedMap);
-
-              const localStorageAuthorized = localStorage.getItem('authorized');
-              if (!localStorageAuthorized) {
-                localStorage.setItem('authorized', JSON.stringify(authorized));
-              } else {
-                const localStorageAuthorizedMap = JSON.parse(localStorageAuthorized);
-                localStorage.setItem('authorized', JSON.stringify({ ...localStorageAuthorizedMap, ...authorized }));
-              }
-
-              authorization.parameters.auth_value_date = new Date().toISOString();
-              this.saveAuthorization(authorization);
-
-              params[0].securities.authorized = authorized;
             }
           }
         }

@@ -12,6 +12,9 @@ auth-modal .modal-ux .opblock-tag {
 auth-modal .modal-ux .auth-container auth-block-profile {
   display: block;
 }
+auth-modal .auth-block h5 {
+  display: inline-block;
+}
 auth-modal .auth-block h4 {
   display: flex;
   justify-content: space-between;
@@ -20,9 +23,9 @@ auth-modal .opblock-summary {
   height: 35px;
   cursor: pointer;
   display: flex;
+  justify-content: space-between;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
   border-radius: 5px 5px 0 0;
   padding-left: 15px !important;
   padding-right: 15px !important;
@@ -90,16 +93,16 @@ auth-modal .buttons-wrapper button {
 auth-modal .method {
   font-weight: bold;
 }
-auth-modal auth-block-profile-request-type .params-wrapper {
+auth-modal .params-wrapper {
   position: relative;
   display: flex;
   flex-direction: row;
 }
-auth-modal auth-block-profile-request-type .params-wrapper label {
+auth-modal .params-wrapper label {
   width: 100px;
   padding-top: 10px;
 }
-auth-modal auth-block-profile-request-type .params-wrapper select {
+auth-modal .params-wrapper select {
   box-shadow: none;
   background-color: hsla(0,0%,100%);
   cursor: pointer;
@@ -109,30 +112,30 @@ auth-modal auth-block-profile-request-type .params-wrapper select {
   width: 100%;
   border: 2px solid #d9d9d9;
 }          
-auth-modal auth-block-profile-request-type .params-wrapper select:focus, 
-auth-modal auth-block-profile-request-type .params-wrapper select:focus-visible {
+auth-modal .params-wrapper select:focus, 
+auth-modal .params-wrapper select:focus-visible {
   border: 2px solid #61affe;
 }
-auth-modal auth-block-profile-request-type .params-wrapper textarea {
+auth-modal .params-wrapper textarea {
   min-height: 100px !important;
   height: 100px;
   margin-left: 8px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .25);
   resize: vertical;
 }         
-auth-modal auth-block-profile-request-type .params-wrapper textarea.invalid,
-auth-modal auth-block-profile-request-type .params-wrapper input[type="number"].invalid {
+auth-modal .params-wrapper textarea.invalid,
+auth-modal .params-wrapper input[type="number"].invalid {
   animation: shake .4s 1;
   background: #feebeb;
   border: 2px solid #f93e3e !important;
 } 
-auth-modal auth-block-profile-request-type .params-wrapper input[type="text"]:focus:not(.invalid), 
-auth-modal auth-block-profile-request-type .params-wrapper input[type="number"]:focus(.invalid), 
-auth-modal auth-block-profile-request-type .params-wrapper input[type="text"]:focus-visible(.invalid), 
-auth-modal auth-block-profile-request-type .params-wrapper input[type="number"]:focus-visible(.invalid) {
+auth-modal .params-wrapper input[type="text"]:focus:not(.invalid), 
+auth-modal .params-wrapper input[type="number"]:focus(.invalid), 
+auth-modal .params-wrapper input[type="text"]:focus-visible(.invalid), 
+auth-modal .params-wrapper input[type="number"]:focus-visible(.invalid) {
   border: 2px solid #61affe;
 }
-auth-modal auth-block-profile-request-type .params-wrapper input[type="number"] {
+auth-modal .params-wrapper input[type="number"] {
   background: #fff;
   border: 1px solid #d9d9d9;
   border-radius: 4px;
@@ -140,8 +143,8 @@ auth-modal auth-block-profile-request-type .params-wrapper input[type="number"] 
   min-width: 100px;
   padding: 8px 10px;
 }
-auth-modal auth-block-profile-request-type .params-wrapper input[type="text"], 
-auth-modal auth-block-profile-request-type .params-wrapper input[type="number"] {
+auth-modal .params-wrapper input[type="text"], 
+auth-modal .params-wrapper input[type="number"] {
   font-family: monospace;
   font-size: 12px;
   font-weight: 600;
@@ -167,15 +170,6 @@ auth-modal auth-block-profile .profile-type-wrapper.opblock-section-header {
 auth-modal auth-block-profile .profile-type-wrapper.opblock-section-header>label {
   margin: 0 !important;
 }
-auth-modal .opblock-summary {
-  height: 35px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
 auth-modal auth-block-profile-body {
   height: 0;
   display: block;

@@ -11,9 +11,9 @@ class AuthBlockProfile extends HTMLElement {
 
     let schemeProfile = authorizations.find((auth) => auth.id === profileId);
 
-    const profileType = (schemeProfile && schemeProfile.profile_type) || 'request';
-
     this.render = async () => {
+
+      const profileType = (schemeProfile && schemeProfile.profile_type) || 'request';
 
       while (this.lastChild) this.removeChild(this.lastChild);
 
@@ -21,8 +21,10 @@ class AuthBlockProfile extends HTMLElement {
         <div class="opblock ${schemeProfile && schemeProfile.id ? 'opblock-get' : 'opblock-post'}">
 
           <div class="opblock-summary opblock-summary-get">
-            <h5>${schemeProfile && schemeProfile.label || 'add new profile'}</h5>
-            <span>${schemeProfile && schemeProfile.id ? '' : ''}</span>
+            <div>
+              <h5>${schemeProfile && schemeProfile.label || 'add new profile'}</h5>
+              <span class="opblock-summary-description">${schemeProfile && schemeProfile.id ? `[${profileType}]` : ''}</span>
+            </div>
           </div>
 
 
@@ -30,9 +32,9 @@ class AuthBlockProfile extends HTMLElement {
             <div class="profile-type-wrapper opblock-section-header">
               <label>Profile type</label>
               <div class="profile-type-selector">
-                <div title="Authorization profile based on constant token" class="radio-wrapper" style="cursor: not-allowed;">
-                  <input style="pointer-events: none;" type="radio" id="${profileIdentifier}-key" name="${profileIdentifier}-profile-type" value="value" ${profileType === 'value' ? 'checked' : ''} />
-                  <label style="pointer-events: none;" for="${profileIdentifier}-key">value</label>
+                <div title="Authorization profile based on constant token" class="radio-wrapper">
+                  <input type="radio" id="${profileIdentifier}-key" name="${profileIdentifier}-profile-type" value="value" ${profileType === 'value' ? 'checked' : ''} />
+                  <label for="${profileIdentifier}-key">value</label>
                 </div>
                 <div title="Authorization profile that performs authorization request" class="radio-wrapper" style="cursor: pointer;">
                   <input type="radio" id="${profileIdentifier}-request" name="${profileIdentifier}-profile-type" value="request" ${profileType === 'request' ? 'checked' : ''}  />
@@ -44,7 +46,7 @@ class AuthBlockProfile extends HTMLElement {
 
             ${profileType === 'request' ? `<auth-block-profile-request-type scheme="${scheme}" profile-id="${profileId}"></auth-block-profile-request-type>` : ''}
             
-            ${profileType === 'value' ? '<auth-block-profile-value-type></auth-block-profile-value-type>' : ''}
+            ${profileType === 'value' ? `<auth-block-profile-value-type scheme="${scheme}" profile-id="${profileId}"></auth-block-profile-value-type>` : ''}
 
             <div class="buttons-wrapper">
               <button class="btn save">Save</button>
@@ -97,8 +99,9 @@ class AuthBlockProfile extends HTMLElement {
 
       (this.querySelectorAll(`input[name="${profileIdentifier}-profile-type"]`) || []).forEach((radio) => {
         radio.addEventListener('change', () => {
+          if (!schemeProfile) schemeProfile = {};
           schemeProfile.profile_type = document.querySelector(`input[name="${profileIdentifier}-profile-type"]:checked`).value;
-          this.querySelector('textarea').value = JSON.stringify(schemeProfile, null, 2);
+          this.render();
         });
       });
 
