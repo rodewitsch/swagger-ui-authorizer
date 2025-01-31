@@ -4,7 +4,7 @@ class AuthBlock extends HTMLElement {
 
     const scheme = SwaggerUIAuthorizerModule.getSecuritySchemes(this.getAttribute('scheme'));
     const authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations();
-    const schemeProfiles = authorizations.filter((auth) => auth.scheme === scheme.security_scheme_name);
+    const schemeProfiles = authorizations.filter((auth) => auth.security_scheme_name === scheme.security_scheme_name);
 
     this.render = async () => {
       const TEMPLATE_CONTENT = `
