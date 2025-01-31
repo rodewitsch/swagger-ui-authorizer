@@ -63,11 +63,16 @@
       closeBtn.style.cursor = 'pointer';
       closeBtn.style.marginLeft = '10px';
       closeBtn.innerHTML = '✖';
-      closeBtn.addEventListener('click', () => {
+
+      function hideValue() {
         input.remove();
         closeBtn.remove();
         element.style.display = 'inline';
-      });
+      }
+      closeBtn.addEventListener('click', () => hideValue());
+
+      wrapper.querySelector('.btn.modal-btn.auth.button').addEventListener('click', () => hideValue());
+
       input.after(closeBtn);
 
       element.style.display = 'none';
