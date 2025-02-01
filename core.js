@@ -208,7 +208,7 @@ const SwaggerUIAuthorizerModule = (() => {
           const securityScheme = this.getSecuritySchemes(securityRequirement);
 
           // Check if the operation requires authentication
-          if (securityScheme.scheme === 'bearer' || securityScheme.scheme === 'basic') {
+          if (['bearer', 'basic', 'apiKey'].includes(securityScheme.scheme)) {
 
             // Get the profile
             const authorizations = this.getSavedAuthorizations();

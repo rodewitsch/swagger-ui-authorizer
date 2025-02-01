@@ -10,7 +10,7 @@ class AuthBlock extends HTMLElement {
       const TEMPLATE_CONTENT = `
         <div class="auth-block">
           <h4><span><code>${scheme.security_scheme_name}</code>
-            &nbsp; (${scheme.scheme}, ${scheme.type})</span>
+            &nbsp; (${scheme.scheme ? `${scheme.scheme}, ` : ''}${scheme.type})</span>
             <div>
               <label>Current profile</label>
               <select class="current-profile-selector" aria-label="Media Type" class="content-type">
