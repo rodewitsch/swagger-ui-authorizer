@@ -1,0 +1,4 @@
+{
+  "commitUrlFormat": "https://github.com/rodewitsch/swagger-ui-authorizer/commits/{{hash}}",
+  "compareUrlFormat": "https://github.com/rodewitsch/swagger-ui-authorizer/compare/{{previousTag}}...{{currentTag}}"
+}
