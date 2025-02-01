@@ -130,8 +130,10 @@ auth-modal .params-wrapper input[type="number"].invalid {
   border: 2px solid #f93e3e !important;
 } 
 auth-modal .params-wrapper input[type="text"]:focus:not(.invalid), 
+auth-modal .params-wrapper input[type="password"]:focus:not(.invalid), 
 auth-modal .params-wrapper input[type="number"]:focus(.invalid), 
 auth-modal .params-wrapper input[type="text"]:focus-visible(.invalid), 
+auth-modal .params-wrapper input[type="password"]:focus-visible(.invalid), 
 auth-modal .params-wrapper input[type="number"]:focus-visible(.invalid) {
   border: 2px solid #61affe;
 }
@@ -144,6 +146,7 @@ auth-modal .params-wrapper input[type="number"] {
   padding: 8px 10px;
 }
 auth-modal .params-wrapper input[type="text"], 
+auth-modal .params-wrapper input[type="password"], 
 auth-modal .params-wrapper input[type="number"] {
   font-family: monospace;
   font-size: 12px;

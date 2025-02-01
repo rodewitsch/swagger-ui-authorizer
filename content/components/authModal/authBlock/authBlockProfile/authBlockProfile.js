@@ -34,13 +34,17 @@ class AuthBlockProfile extends HTMLElement {
               ${schemeProfile && schemeProfile.id 
                 ? `<label style="padding-left: 10px">${profileType}</label>` 
                 : `<div class="profile-type-selector">
-                  <div title="Authorization profile based on constant token" class="radio-wrapper">
+                  <div title="Authorization profile based on constant token (API key)" class="radio-wrapper">
                     <input type="radio" id="${profileIdentifier}-key" name="${profileIdentifier}-profile-type" value="value" ${profileType === 'value' ? 'checked' : ''} />
                     <label for="${profileIdentifier}-key">value</label>
                   </div>
-                  <div title="Authorization profile that performs authorization request" class="radio-wrapper" style="cursor: pointer;">
+                  <div title="Authorization profile that performs authorization request (API key)" class="radio-wrapper" style="cursor: pointer;">
                     <input type="radio" id="${profileIdentifier}-request" name="${profileIdentifier}-profile-type" value="request" ${profileType === 'request' ? 'checked' : ''}  />
                     <label for="${profileIdentifier}-request">request</label>
+                  </div>
+                  <div title="Authorization profile based on login/password (HTTP Basic)" class="radio-wrapper" style="cursor: pointer;">
+                    <input type="radio" id="${profileIdentifier}-credentials" name="${profileIdentifier}-profile-type" value="credentials" ${profileType === 'credentials' ? 'checked' : ''}  />
+                    <label for="${profileIdentifier}-credentials">credentials</label>
                   </div>
                 </div>
               `}
@@ -50,6 +54,8 @@ class AuthBlockProfile extends HTMLElement {
             ${profileType === 'request' ? `<auth-block-profile-request-type scheme="${scheme}" profile-id="${profileId}"></auth-block-profile-request-type>` : ''}
             
             ${profileType === 'value' ? `<auth-block-profile-value-type scheme="${scheme}" profile-id="${profileId}"></auth-block-profile-value-type>` : ''}
+
+            ${profileType === 'credentials' ? `<auth-block-profile-credentials-type scheme="${scheme}" profile-id="${profileId}"></auth-block-profile-credentials-type>` : ''}
 
             <div class="buttons-wrapper">
               <button class="btn save">Save</button>

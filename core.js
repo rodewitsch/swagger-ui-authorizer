@@ -170,19 +170,20 @@ const SwaggerUIAuthorizerModule = (() => {
           // Check if the operation requires authentication
           if (securityScheme.scheme === 'bearer' || securityScheme.scheme === 'basic') {
 
-            // Check if request is already authorized
-            const currentAuthorization = params[0].securities.authorized && params[0].securities.authorized[securityRequirement];
-            if (currentAuthorization && this.isJWT(currentAuthorization.value) && this.validateJWT(currentAuthorization.value)) return params;
-
-            const authorizations = this.getSavedAuthorizations();
-
-            if (!authorizations.length) return params;
-
             // Get the profile
+            const authorizations = this.getSavedAuthorizations();
             const authorization = authorizations.find(profile => profile.security_scheme_name === securityRequirement && profile.current);
 
-
             if (authorization) {
+
+              if (!authorizations.length) return params;
+
+              if (authorization.profile_type === 'credentials') {
+                ui.preauthorizeBasic(securityRequirement, authorization.parameters.login, authorization.parameters.password);
+                const authorizedMap = window.ui.getSystem().authSelectors.authorized();
+                const authorized = this.mapToObject(authorizedMap);
+                params[0].securities.authorized = authorized;
+              }
 
               if (authorization.profile_type === 'value') {
                 ui.preauthorizeApiKey(securityRequirement, authorization.parameters.auth_value);
@@ -192,6 +193,10 @@ const SwaggerUIAuthorizerModule = (() => {
               }
 
               if (authorization.profile_type === 'request') {
+
+                // Check if request is already authorized
+                const currentAuthorization = params[0].securities.authorized && params[0].securities.authorized[securityRequirement];
+                if (currentAuthorization && this.isJWT(currentAuthorization.value) && this.validateJWT(currentAuthorization.value)) return params;
 
                 if (authorization.parameters.auth_value_ttl && authorization.parameters.auth_value_date) {
                   const ttl = authorization.parameters.auth_value_ttl;

@@ -48,15 +48,23 @@
     element.innerHTML += '👁';
 
     element.addEventListener('click', () => {
-      const wrapper = element.closest('.auth-container');
-      const authNameElement = wrapper.querySelector('h4 code');
+      const authContainer = element.closest('.auth-container');
+      const authNameElement = authContainer.querySelector('h4 code');
+      const wrapper = element.closest('.wrapper');
       const savedSecurity = SwaggerUIAuthorizerModule.getSavedSecurity(authNameElement.innerHTML);
 
       const input = document.createElement('input');
       input.type = 'text';
       input.setAttribute('readonly', true);
       input.style.marginLeft = '10px';
-      input.value = savedSecurity.value;
+
+      if (wrapper.querySelector('label[for="auth-basic-username"]')) {
+        input.value = savedSecurity.value.username;
+      } else if (wrapper.querySelector('label[for="auth-basic-password"]')) {
+        input.value = savedSecurity.value.password;
+      } else {
+        input.value = savedSecurity.value;
+      }
 
       element.after(input);
 
@@ -72,7 +80,7 @@
       }
       closeBtn.addEventListener('click', () => hideValue());
 
-      wrapper.querySelector('.btn.modal-btn.auth.button').addEventListener('click', () => hideValue());
+      authContainer.querySelector('.btn.modal-btn.auth.button').addEventListener('click', () => hideValue());
 
       input.after(closeBtn);
 
