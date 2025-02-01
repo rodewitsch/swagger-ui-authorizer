@@ -1,9 +1,21 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## 0.11.0 (2025-02-01)
+
+
+### Features
+
+* build default request profile properly ([a0d0be8](https://github.com/rodewitsch/swagger-ui-authorizer/commits/a0d0be88a3bb27883f550cfb7d54f292f43ace9c))
+* disable autocomplete for credentials inputs ([9bc4838](https://github.com/rodewitsch/swagger-ui-authorizer/commits/9bc4838e047cee5f49442a76f5250e70907a8349))
+
 # 0.10.0 (2025-02-01)
 
 ### Features
 - add credentials profile ([74facce](https://github.com/rodewitsch/swagger-ui-authorizer/commit/74facce6068a8c7fb874f46a6f8fbade09e8223b)), closes [#18](https://github.com/rodewitsch/swagger-ui-authorizer/issues/18)
 
-# 0.9.0 (2025-01-31)
+## 0.9.0 (2025-01-31)
 
 ### Bug Fixes
 
@@ -17,7 +29,7 @@
 - constant value profile type ([7120214](https://github.com/rodewitsch/swagger-ui-authorizer/commit/7120214c1b193809bdacee0212687c34e4725785)), closes [#16](https://github.com/rodewitsch/swagger-ui-authorizer/issues/16)
 - value profile type ([9e4b440](https://github.com/rodewitsch/swagger-ui-authorizer/commit/9e4b440aaebccf063be0589232a02e5ddae04fa8)), closes [#3](https://github.com/rodewitsch/swagger-ui-authorizer/issues/3)
 
-# 0.8.0 (2025-01-30)
+## 0.8.0 (2025-01-30)
 
 ### Bug Fixes
 
@@ -29,7 +41,7 @@
 - add explanation tooltips to inputs ([5928710](https://github.com/rodewitsch/swagger-ui-authorizer/commit/5928710b5a918a6ade2185713924a98949daf6a6)), closes [#11](https://github.com/rodewitsch/swagger-ui-authorizer/issues/11)
 - build request body based on schema ([87a967d](https://github.com/rodewitsch/swagger-ui-authorizer/commit/87a967d8c470a5eb0d77bfd90e23da15ab7489e4)), closes [#10](https://github.com/rodewitsch/swagger-ui-authorizer/issues/10)
 
-# 0.7.0 (2025-01-29)
+## 0.7.0 (2025-01-29)
 
 ### Features
 
@@ -38,25 +50,25 @@
 - select with search ([3ba4f60](https://github.com/rodewitsch/swagger-ui-authorizer/commit/3ba4f60858dfeeb9b559234d2abd3c991784c0da)), closes [#8](https://github.com/rodewitsch/swagger-ui-authorizer/issues/8)
 - show understandable message if token not found ([8497b3d](https://github.com/rodewitsch/swagger-ui-authorizer/commit/8497b3dfe81737318791a1f67caea90f83fe8f9a)), closes [#9](https://github.com/rodewitsch/swagger-ui-authorizer/issues/9)
 
-# 0.6.0 (2025-01-28)
+## 0.6.0 (2025-01-28)
 
 ### Features
 
 - form validation ([9108150](https://github.com/rodewitsch/swagger-ui-authorizer/commit/9108150bf13680994ee043df407ab7ba9ab8ca42))
 
-# 0.5.0 (2025-01-28)
+## 0.5.0 (2025-01-28)
 
 ### Features
 
 - add token ttl value ([31aa8a0](https://github.com/rodewitsch/swagger-ui-authorizer/commit/31aa8a0ba0a70743def5c2134a8fe662c7beae09))
 
-# 0.4.1 (2025-01-27)
+## 0.4.1 (2025-01-27)
 
 ### Bug Fixes
 
 - securityRequirements is not iterable error ([9fd076d](https://github.com/rodewitsch/swagger-ui-authorizer/commit/9fd076d7fe03475ece7015806783690106fbee48))
 
-# 0.4.0 (2025-01-26)
+## 0.4.0 (2025-01-26)
 
 ### Features
 
@@ -64,14 +76,14 @@
 - clear current security scheme value when changing profile ([829f870](https://github.com/rodewitsch/swagger-ui-authorizer/commit/829f870451a7ca1a89d7c35819fbae484b2e4f5b))
 - design enhancements ([8b6f3d3](https://github.com/rodewitsch/swagger-ui-authorizer/commit/8b6f3d322a005dc0192fe923fbca9295b740172e))
 
-# 0.3.0 (2025-01-23)
+## 0.3.0 (2025-01-23)
 
 ### Features
 
 - show saved authorizations value ([876dfcf](https://github.com/rodewitsch/swagger-ui-authorizer/commit/876dfcf40b7bea707dc95649798993ca52421bf8))
 
 
-# 0.2.0 (2025-01-22)
+## 0.2.0 (2025-01-22)
 
 ### Bug Fixes
 
@@ -82,7 +94,7 @@
 - ui enhancements ([71ea48b](https://github.com/rodewitsch/swagger-ui-authorizer/commit/71ea48b6d77bd8756c086654b9c16a5db7b56608))
 - set authorizations for pre authorize requests ([4758e22](https://github.com/rodewitsch/swagger-ui-authorizer/commit/4758e224982b69df98624052b685e0f02786d5ea))
 
-# 0.1.0 (2025-01-21)
+## 0.1.0 (2025-01-21)
 
 ### Features
 
