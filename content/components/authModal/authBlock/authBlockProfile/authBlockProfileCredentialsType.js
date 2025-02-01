@@ -66,7 +66,6 @@ class AuthBlockProfileCredentialsType extends HTMLElement {
           schemeProfile.parameters[event.target.dataset.parametersProperty] = event.target.value;
 
           this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
-          this.render();
         });
       });
 
@@ -77,7 +76,6 @@ class AuthBlockProfileCredentialsType extends HTMLElement {
 
         schemeProfile.label = event.target.value;
         this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
-        this.render();
       });
 
       return true;
