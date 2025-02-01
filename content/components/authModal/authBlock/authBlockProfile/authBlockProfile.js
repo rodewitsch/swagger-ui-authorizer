@@ -4,16 +4,25 @@ class AuthBlockProfile extends HTMLElement {
 
     const scheme = this.getAttribute('scheme');
     const profileId = this.getAttribute('profile-id');
-    const securitySchemes = SwaggerUIAuthorizerModule.getSecuritySchemes(scheme);
+    const securityScheme = SwaggerUIAuthorizerModule.getSecuritySchemes(scheme);
     const authorizations = SwaggerUIAuthorizerModule.getSavedAuthorizations(scheme);
 
-    const profileIdentifier = `${securitySchemes.security_scheme_name}-${profileId}`;
+    const profileIdentifier = `${securityScheme.security_scheme_name}-${profileId}`;
 
     let schemeProfile = authorizations.find((auth) => auth.id === profileId);
 
+    const getAvailableProfileTypes = () => {
+      const availableProfileTypes = [];
+      if (securityScheme.scheme === 'bearer') availableProfileTypes.push('request', 'value');
+      if (securityScheme.type === 'apiKey') availableProfileTypes.push('request', 'value');
+      if (securityScheme.scheme === 'basic' && securityScheme.type === 'http') availableProfileTypes.push('credentials');
+      return availableProfileTypes;
+    }
+
     this.render = async () => {
 
-      const profileType = (schemeProfile && schemeProfile.profile_type) || 'request';
+
+      const profileType = (schemeProfile && schemeProfile.profile_type) || getAvailableProfileTypes()[0];
 
       while (this.lastChild) this.removeChild(this.lastChild);
 
@@ -34,20 +43,22 @@ class AuthBlockProfile extends HTMLElement {
               ${schemeProfile && schemeProfile.id
           ? `<label style="padding-left: 10px">${profileType}</label>`
           : `<div class="profile-type-selector">
-                  <div title="Authorization profile that performs authorization request (API key)" class="radio-wrapper" style="cursor: pointer;">
+                
+                  <div title="Authorization profile that performs authorization request (API key)" class="radio-wrapper ${getAvailableProfileTypes().includes('request') ? '' : 'hidden'}">
                     <input type="radio" id="${profileIdentifier}-request" name="${profileIdentifier}-profile-type" value="request" ${profileType === 'request' ? 'checked' : ''}  />
                     <label for="${profileIdentifier}-request">request</label>
                   </div>
                   
-                  <div title="Authorization profile based on constant token (API key)" class="radio-wrapper">
+                  <div title="Authorization profile based on constant token (API key)" class="radio-wrapper ${getAvailableProfileTypes().includes('value') ? '' : 'hidden'}">
                     <input type="radio" id="${profileIdentifier}-key" name="${profileIdentifier}-profile-type" value="value" ${profileType === 'value' ? 'checked' : ''} />
                     <label for="${profileIdentifier}-key">value</label>
                   </div>
-
-                  <div title="Authorization profile based on login/password (HTTP Basic)" class="radio-wrapper" style="cursor: pointer;">
+                  
+                  <div title="Authorization profile based on login/password (HTTP Basic)" class="radio-wrapper ${getAvailableProfileTypes().includes('credentials') ? '' : 'hidden'}">
                     <input type="radio" id="${profileIdentifier}-credentials" name="${profileIdentifier}-profile-type" value="credentials" ${profileType === 'credentials' ? 'checked' : ''}  />
                     <label for="${profileIdentifier}-credentials">credentials</label>
                   </div>
+
                 </div>
               `}
             </div>

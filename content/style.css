@@ -57,8 +57,12 @@ auth-modal auth-block-profile.open .opblock-body {
 }
 auth-modal .radio-wrapper {
   display: flex;
+  cursor: pointer;
   align-items: center;
   justify-content: center;
+}
+auth-modal .radio-wrapper.hidden {
+  display: none;
 }
 auth-modal .profile-type-wrapper {
   display: flex;
