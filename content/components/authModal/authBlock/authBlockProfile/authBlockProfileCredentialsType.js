@@ -32,12 +32,12 @@ class AuthBlockProfileCredentialsType extends HTMLElement {
             </div>
 
             <div class="params-wrapper">
-              <label>Value source</label>
+              <label>Login</label>
               <input title="Login" spellcheck="false" data-parameters-property="login" class="parameters-value" type="text" autocomplete="new-text" required="true" placeholder="login" value="${schemeProfile.parameters.login || ''}" />
             </div>            
             
             <div class="params-wrapper">
-              <label>Value source</label>
+              <label>Password</label>
               <input title="Password" spellcheck="false" data-parameters-property="password" class="parameters-value" type="password" autocomplete="new-password" required="true" placeholder="password" value="${schemeProfile.parameters.password || ''}" />
             </div>
 
