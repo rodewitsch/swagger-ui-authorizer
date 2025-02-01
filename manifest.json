@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Swagger UI Authorizer",
-  "description": "Swagger UI Authorizer",
+  "description": "Browser extension that performs automatic authorization of requests before executing them on Swagger UI pages",
   "version": "0.11.0",
   "icons": {
     "16": "/assets/images/icons/icon16.png",
