@@ -103,10 +103,10 @@ class AuthBlockProfile extends HTMLElement {
       if (closeBtn) {
         closeBtn.addEventListener('click', (event) => {
           event.currentTarget.closest('auth-block-profile').classList.toggle('open');
-          if (!schemeProfile.id) {
-            schemeProfile = null;
-          } else {
+          if (schemeProfile && schemeProfile.id) {
             schemeProfile = authorizations.find((auth) => auth.id === profileId);
+          } else {
+            schemeProfile = null;
           }
           this.render();
         });
