@@ -250,7 +250,7 @@ class AuthBlockProfileRequestType extends HTMLElement {
 
         schemeProfile.parameters.parameters = SwaggerUIAuthorizerModule.getRequestPathParams(schemeProfile.parameters.operation_id);
 
-        schemeProfile.parameters.headersParams = SwaggerUIAuthorizerModule.getRequestHeadersParams(schemeProfile.parameters.operation_id);
+        schemeProfile.parameters.headers = SwaggerUIAuthorizerModule.getRequestHeadersParams(schemeProfile.parameters.operation_id);
 
         schemeProfile.parameters.body = SwaggerUIAuthorizerModule.getRequestBodyParams(schemeProfile.parameters.operation_id);
 
