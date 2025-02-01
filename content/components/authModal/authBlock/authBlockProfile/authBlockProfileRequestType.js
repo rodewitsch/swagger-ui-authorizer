@@ -27,10 +27,10 @@ class AuthBlockProfileRequestType extends HTMLElement {
       "label": "",
       "parameters": {
         "operation_id": API[0].operation_id,
-        "headers": {},
-        "query": {},
-        "parameters": {},
-        "body": {},
+        "headers": SwaggerUIAuthorizerModule.getRequestHeadersParams(API[0].operation_id),
+        "query": SwaggerUIAuthorizerModule.getRequestQueryParams(API[0].operation_id),
+        "parameters": SwaggerUIAuthorizerModule.getRequestPathParams(API[0].operation_id),
+        "body": SwaggerUIAuthorizerModule.getRequestBodyParams(API[0].operation_id),
         "auth_value_source": '',
         "auth_value_ttl": '',
       },
@@ -246,51 +246,13 @@ class AuthBlockProfileRequestType extends HTMLElement {
 
         const request = SwaggerUIAuthorizerModule.getRequestInfoByOperationId(event.target.value);
 
-        const queryParams = request.operation.parameters.filter((param) => param.in === 'query');
+        schemeProfile.parameters.query = SwaggerUIAuthorizerModule.getRequestQueryParams(schemeProfile.parameters.operation_id);
 
-        if (queryParams.length) {
-          schemeProfile.parameters.query = queryParams.reduce((acc, param) => {
-            acc[param.name] = '';
-            return acc;
-          }, {});
-        } else {
-          schemeProfile.parameters.query = {};
-        }
+        schemeProfile.parameters.parameters = SwaggerUIAuthorizerModule.getRequestPathParams(schemeProfile.parameters.operation_id);
 
-        const pathParams = request.operation.parameters.filter((param) => param.in === 'path');
+        schemeProfile.parameters.headersParams = SwaggerUIAuthorizerModule.getRequestHeadersParams(schemeProfile.parameters.operation_id);
 
-        if (pathParams.length) {
-          schemeProfile.parameters.parameters = pathParams.reduce((acc, param) => {
-            acc[param.name] = '';
-            return acc;
-          }, {});
-        } else {
-          schemeProfile.parameters.parameters = {};
-        }
-
-        const headersParams = request.operation.parameters.filter((param) => param.in === 'header');
-
-        if (headersParams.length) {
-          schemeProfile.parameters.headers = headersParams.reduce((acc, param) => {
-            acc[param.name] = '';
-            return acc;
-          }, {});
-        } else {
-          schemeProfile.parameters.headersParams = {};
-        }
-
-        if (request.operation.requestBody) {
-          try {
-            if (request.operation.requestBody.content['application/json']) {
-              const schema = request.operation.requestBody.content['application/json'].schema;
-              const schemaObject = SwaggerUIAuthorizerModule.createJsonObjectFromSchema(schema);
-              schemeProfile.parameters.body = schemaObject;
-            }
-          } catch (error) {
-            console.error(error);
-            schemeProfile.parameters.body = {};
-          }
-        }
+        schemeProfile.parameters.body = SwaggerUIAuthorizerModule.getRequestBodyParams(schemeProfile.parameters.operation_id);
 
         this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
 
