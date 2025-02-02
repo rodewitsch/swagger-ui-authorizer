@@ -28,5 +28,5 @@ If this extension is useful to you, please leave a few kind words in the review,
 
 ### Video preview (click to play)
 
-[![Watch the video](https://img.youtube.com/vi/2AeB_kTmQYI/maxresdefault.jpg)]([https://www.youtube.com/watch?v=u8NA7PN8EaI](https://www.youtube.com/watch?v=2AeB_kTmQYI))
+[![Watch the video](https://img.youtube.com/vi/2AeB_kTmQYI/maxresdefault.jpg)](https://www.youtube.com/watch?v=2AeB_kTmQYI)
 
