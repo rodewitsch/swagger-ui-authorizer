@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/rodewitsch/swagger-ui-authorizer/compare/v0.11.0...v1.0.0) (2025-02-02)
+
+
+### Features
+
+* add additional condition to authorize apiKey security type ([ef68891](https://github.com/rodewitsch/swagger-ui-authorizer/commits/ef688914c87eb768f5f5db7a0f5e9ebdea8c0fb7))
+* hide empty scheme label, allow apiKey scheme ([06fcc49](https://github.com/rodewitsch/swagger-ui-authorizer/commits/06fcc49add3e52154ba9b93978bb9537853081e6))
+* hide unavailable profile types ([621d4f1](https://github.com/rodewitsch/swagger-ui-authorizer/commits/621d4f134e7109c22759a577150ea59b0b49d359))
+* rendering optimizations ([15ecb9d](https://github.com/rodewitsch/swagger-ui-authorizer/commits/15ecb9d3bd0de869b990c8be9da82e480edac50b)), closes [#4](https://github.com/rodewitsch/swagger-ui-authorizer/issues/4)
+
+
+### Bug Fixes
+
+* close button clean state condition ([a74ba5a](https://github.com/rodewitsch/swagger-ui-authorizer/commits/a74ba5a44cdd22ee9bac97b698d4c592378773b5))
+* credentials profile inputs labels ([f7488a6](https://github.com/rodewitsch/swagger-ui-authorizer/commits/f7488a64b65682beb615402f8de8eede184c2835))
+
 ## 0.11.0 (2025-02-01)
 
 
