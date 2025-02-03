@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/rodewitsch/swagger-ui-authorizer/compare/v1.0.0...v1.0.1) (2025-02-03)
+
+
+### Bug Fixes
+
+* remove storage permission ([4983ca8](https://github.com/rodewitsch/swagger-ui-authorizer/commits/4983ca8fe9c07aa33fb3dcd7645b0041ca1afcd1))
+
 ## [1.0.0](https://github.com/rodewitsch/swagger-ui-authorizer/compare/v0.11.0...v1.0.0) (2025-02-02)
 
 
