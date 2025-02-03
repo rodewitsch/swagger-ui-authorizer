@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-redeclare
 const SwaggerUIAuthorizerModule = (() => {
   return {
     assetsCache: {},
@@ -28,7 +29,7 @@ const SwaggerUIAuthorizerModule = (() => {
     getAPI: function () {
       if (this.apiCache) return this.apiCache;
       this.apiCache = this.mapToObject(window.ui.spec()).json;
-      return api;
+      return this.apiCache;
     },
     getRequestSchemas: function (schema) {
       const API = this.getAPI();
@@ -219,14 +220,14 @@ const SwaggerUIAuthorizerModule = (() => {
               if (!authorizations.length) return params;
 
               if (authorization.profile_type === 'credentials') {
-                ui.preauthorizeBasic(securityRequirement, authorization.parameters.login, authorization.parameters.password);
+                window.ui.preauthorizeBasic(securityRequirement, authorization.parameters.login, authorization.parameters.password);
                 const authorizedMap = window.ui.getSystem().authSelectors.authorized();
                 const authorized = this.mapToObject(authorizedMap);
                 params[0].securities.authorized = authorized;
               }
 
               if (authorization.profile_type === 'value') {
-                ui.preauthorizeApiKey(securityRequirement, authorization.parameters.auth_value);
+                window.ui.preauthorizeApiKey(securityRequirement, authorization.parameters.auth_value);
                 const authorizedMap = window.ui.getSystem().authSelectors.authorized();
                 const authorized = this.mapToObject(authorizedMap);
                 params[0].securities.authorized = authorized;
@@ -277,7 +278,7 @@ const SwaggerUIAuthorizerModule = (() => {
                   return params;
                 }
 
-                ui.preauthorizeApiKey(securityRequirement, token);
+                window.ui.preauthorizeApiKey(securityRequirement, token);
                 const authorizedMap = window.ui.getSystem().authSelectors.authorized();
 
                 const authorized = this.mapToObject(authorizedMap);

@@ -244,8 +244,6 @@ class AuthBlockProfileRequestType extends HTMLElement {
         schemeProfile.parameters.operation_id = event.target.value;
         this.dispatchEvent(new CustomEvent('profile-changed', { bubbles: true, detail: schemeProfile }));
 
-        const request = SwaggerUIAuthorizerModule.getRequestInfoByOperationId(event.target.value);
-
         schemeProfile.parameters.query = SwaggerUIAuthorizerModule.getRequestQueryParams(schemeProfile.parameters.operation_id);
 
         schemeProfile.parameters.parameters = SwaggerUIAuthorizerModule.getRequestPathParams(schemeProfile.parameters.operation_id);
