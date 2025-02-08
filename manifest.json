@@ -3,6 +3,20 @@
   "name": "Swagger UI Authorizer",
   "description": "Browser extension that performs automatic authorization of requests before executing them on Swagger UI pages",
   "version": "1.0.1",
+  "keywords": [
+    "swagger",
+    "ui",
+    "authorizer",
+    "chrome",
+    "extension",
+    "microsoft edge",
+    "api",
+    "authorization",
+    "openapi",
+    "security",
+    "development",
+    "testing"
+  ],
   "icons": {
     "16": "/assets/images/icons/icon16.png",
     "48": "/assets/images/icons/icon48.png",
@@ -30,15 +44,6 @@
         "<all_urls>"
       ],
       "run_at": "document_idle"
-    },
-    {
-      "js": [
-        "content/isolatedContent.js"
-      ],
-      "matches": [
-        "<all_urls>"
-      ],
-      "run_at": "document_idle"
     }
   ],
   "web_accessible_resources": [
@@ -50,6 +55,5 @@
         "<all_urls>"
       ]
     }
-  ],
-  "permissions": []
+  ]
 }
