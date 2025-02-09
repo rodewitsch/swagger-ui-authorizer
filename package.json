@@ -1,27 +1,25 @@
 {
   "name": "swagger-ui-authorizer",
   "version": "1.0.1",
-  "description": "",
+  "description": "Browser extension that performs automatic authorization of requests before executing them on Swagger UI pages.",
   "main": "background.js",
-  "keywords": [],
+  "keywords": [
+    "swagger",
+    "ui",
+    "authorization",
+    "chrome",
+    "extension",
+    "openapi"
+  ],
   "author": "",
   "license": "MIT",
   "scripts": {
     "release": "standard-version"
-  },
-  "dependencies": {
-    "@webcomponents/webcomponentsjs": "^2.8.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
     "eslint": "^8.57.1",
     "globals": "^15.14.0",
     "standard-version": "^9.5.0"
-  },
-  "bundledDependencies": [
-    "@webcomponents/webcomponentsjs"
-  ],
-  "bundleDependencies": [
-    "@webcomponents/webcomponentsjs"
-  ]
+  }
 }
