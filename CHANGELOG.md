@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/rodewitsch/swagger-ui-authorizer/compare/v1.0.1...v1.1.0) (2025-02-09)
+
+
+### Features
+
+* remove isolated content script ([acf8f1b](https://github.com/rodewitsch/swagger-ui-authorizer/commits/acf8f1b6d2a91e5d52961a22fffb933301c763e9)), closes [#5](https://github.com/rodewitsch/swagger-ui-authorizer/issues/5)
+
 ### [1.0.1](https://github.com/rodewitsch/swagger-ui-authorizer/compare/v1.0.0...v1.0.1) (2025-02-03)
 
 

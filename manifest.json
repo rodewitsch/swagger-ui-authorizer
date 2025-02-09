@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Swagger UI Authorizer",
   "description": "Browser extension that performs automatic authorization of requests before executing them on Swagger UI pages",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "keywords": [
     "swagger",
     "ui",
