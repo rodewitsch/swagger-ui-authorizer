@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/rodewitsch/swagger-ui-authorizer/compare/v1.1.0...v1.1.1) (2025-03-26)
+
+
+### Features
+
+* remove legacy migrations ([6e861dd](https://github.com/rodewitsch/swagger-ui-authorizer/commits/6e861ddd39c0ae22e225f4002e869f2be90bd69e)), closes [#21](https://github.com/rodewitsch/swagger-ui-authorizer/issues/21)
+
+
+### Bug Fixes
+
+* check request operation parameters existence ([3a87df2](https://github.com/rodewitsch/swagger-ui-authorizer/commits/3a87df2e21c3c218d32c90a6049686a74c47ca1c)), closes [#22](https://github.com/rodewitsch/swagger-ui-authorizer/issues/22)
+
 ## [1.1.0](https://github.com/rodewitsch/swagger-ui-authorizer/compare/v1.0.1...v1.1.0) (2025-02-09)
 
 
