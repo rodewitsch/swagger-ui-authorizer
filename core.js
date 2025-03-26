@@ -115,7 +115,7 @@ const SwaggerUIAuthorizerModule = (() => {
     },
     getRequestQueryParams: function (operationId) {
       const request = this.getRequestInfoByOperationId(operationId);
-      const queryParams = request.operation.parameters.filter((param) => param.in === 'query');
+      const queryParams = (request.operation.parameters || []).filter((param) => param.in === 'query');
       if (!queryParams.length) return {};
       return queryParams.reduce((acc, param) => {
         acc[param.name] = '';
@@ -124,7 +124,7 @@ const SwaggerUIAuthorizerModule = (() => {
     },
     getRequestPathParams: function (operationId) {
       const request = this.getRequestInfoByOperationId(operationId);
-      const pathParams = request.operation.parameters.filter((param) => param.in === 'path');
+      const pathParams = (request.operation.parameters || []).filter((param) => param.in === 'path');
       if (!pathParams.length) return {};
       return pathParams.reduce((acc, param) => {
         acc[param.name] = '';
@@ -133,7 +133,7 @@ const SwaggerUIAuthorizerModule = (() => {
     },
     getRequestHeadersParams: function (operationId) {
       const request = this.getRequestInfoByOperationId(operationId);
-      const headersParams = request.operation.parameters.filter((param) => param.in === 'header');
+      const headersParams = (request.operation.parameters || []).filter((param) => param.in === 'header');
       if (!headersParams.length) return {};
       return headersParams.reduce((acc, param) => {
         acc[param.name] = '';

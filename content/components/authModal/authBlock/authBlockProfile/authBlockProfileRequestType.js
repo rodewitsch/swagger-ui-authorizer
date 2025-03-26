@@ -44,9 +44,9 @@ class AuthBlockProfileRequestType extends HTMLElement {
 
       const request = SwaggerUIAuthorizerModule.getRequestInfoByOperationId(schemeProfile.parameters.operation_id);
 
-      const hasPathParams = Boolean(request.operation.parameters.filter((param) => param.in === 'path').length);
-      const hasQueryParams = Boolean(request.operation.parameters.filter((param) => param.in === 'query').length);
-      const hasHeaders = Boolean(request.operation.parameters.filter((param) => param.in === 'header').length);
+      const hasPathParams = Boolean((request.operation.parameters || []).filter((param) => param.in === 'path').length);
+      const hasQueryParams = Boolean((request.operation.parameters || []).filter((param) => param.in === 'query').length);
+      const hasHeaders = Boolean((request.operation.parameters || []).filter((param) => param.in === 'header').length);
       const hasBody = request.method !== 'get';
 
       const selectedRequest = API.find((request) => request.operation_id === schemeProfile.parameters.operation_id);
