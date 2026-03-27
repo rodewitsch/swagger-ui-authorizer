@@ -38,6 +38,10 @@ class AuthModal extends HTMLElement {
 
       return true;
     }
+
+    this._onKeyDown = (e) => {
+      if (e.key === 'Escape') this.remove();
+    };
   }
 
   /**
@@ -45,12 +49,14 @@ class AuthModal extends HTMLElement {
    */
   connectedCallback() {
     if (!this.rendered) { this.rendered = this.render(); }
+    document.addEventListener('keydown', this._onKeyDown);
   }
 
   /**
    * Called when the element is removed from the document.
    */
   disconnectedCallback() {
+    document.removeEventListener('keydown', this._onKeyDown);
     this.subscriptions.forEach((subscription) => SwaggerUIAuthorizationStore.unsubscribe(subscription));
   }
 }
