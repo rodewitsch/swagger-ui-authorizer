@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/rodewitsch/swagger-ui-authorizer/compare/v1.1.1...v1.2.0) (2026-03-27)
+
+
+### Features
+
+* close modal on Esc ([5675eb5](https://github.com/rodewitsch/swagger-ui-authorizer/commits/5675eb5a80bd61d9ab8e940b5fec9a90462ef114))
+
 ### [1.1.1](https://github.com/rodewitsch/swagger-ui-authorizer/compare/v1.1.0...v1.1.1) (2025-03-26)
 
 
