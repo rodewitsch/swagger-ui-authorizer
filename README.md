@@ -26,11 +26,19 @@ Extension keeps your authorization data only in your browser and sends it only t
 
 [![Watch the video](https://img.youtube.com/vi/2AeB_kTmQYI/maxresdefault.jpg)](https://www.youtube.com/watch?v=2AeB_kTmQYI)
 
+<p align="center">
 If you think this extension might be useful to you, but it doesn't work in your case, write to me, maybe I can help.
-
+</p>
+<p align="center">
 If this extension is useful to you, please leave a few kind words in the review, it will be a good payment for me. 👉👈
-
+</p>
+<p align="center">
 I’ll be glad to have your support. Every donation goes towards developing the project and maintaining the infrastructure 💙
+</p>
+<p align="center">
+  <a href="https://boosty.to/rodevich/donate">
+    <img src="https://github.com/user-attachments/assets/a15bd2c0-ed6b-4140-9480-dfb70a0b5f1a" alt="Donate">
+  </a>
+</p>
 
-[![Donate](https://github.com/user-attachments/assets/a15bd2c0-ed6b-4140-9480-dfb70a0b5f1a)](https://boosty.to/rodevich/donate)
 
