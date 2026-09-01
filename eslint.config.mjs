@@ -14,6 +14,13 @@ export default [
       }, sourceType: "script"
     }
   },
+  {
+    files: ["scripts/**/*.js"],
+    languageOptions: {
+      globals: { ...globals.node },
+      sourceType: "commonjs"
+    }
+  },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
 ];
