@@ -6,6 +6,28 @@ auth-modal .modal-ux {
 auth-modal .modal-ux .auth-container {
   padding: 0 !important;
 }
+auth-modal .modal-ux-header .donate {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 12px;
+  cursor: pointer;
+  opacity: 1;
+  text-decoration: none;
+  color: #000;
+}
+auth-modal .modal-ux-header .donate:hover {
+  opacity: .7;
+}
+auth-modal .modal-ux-header .donate svg {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+auth-modal .modal-ux-header .donate span {
+  font-size: 13px;
+  font-weight: 600;
+}
 auth-modal .modal-ux .opblock-tag {
   padding: 10px 20px 10px 20px !important;
 }
