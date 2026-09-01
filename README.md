@@ -31,5 +31,6 @@ If you think this extension might be useful to you, but it doesn't work in your 
 If this extension is useful to you, please leave a few kind words in the review, it will be a good payment for me. 👉👈
 
 I’ll be glad to have your support. Every donation goes towards developing the project and maintaining the infrastructure 💙
+
 [![Donate](https://github.com/user-attachments/assets/a15bd2c0-ed6b-4140-9480-dfb70a0b5f1a)](https://boosty.to/rodevich/donate)
 
